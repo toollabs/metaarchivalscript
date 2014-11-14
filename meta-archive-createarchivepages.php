@@ -8,7 +8,7 @@ Licence : GNU General Public License v3
                         (see http://www.gnu.org/licenses/)
 
 Date of creation : 2011-04
-Last modified : 2011-10-13
+Last modified : 14 November 2014
 
 Meta Archival Script - creates all archive pages
 
