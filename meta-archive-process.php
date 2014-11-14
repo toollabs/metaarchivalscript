@@ -8,7 +8,7 @@ Licence : GNU General Public License v3
                         (see http://www.gnu.org/licenses/)
 
 Date of creation : 2011-03
-Last modified : 2011-11-10
+Last modified : 14 November 2014
 
 Meta Archival Script
         -> archive steward requests on the following pages :
