@@ -5,29 +5,29 @@
 Author : Quentinv57
 
 Licence : GNU General Public License v3
-			(see http://www.gnu.org/licenses/)
-			
+                        (see http://www.gnu.org/licenses/)
+
 Date of creation : 2011-04
 Last modified : 2011-10-13
 
 Meta Archival Script - creates all archive pages
-			
+
 ---------------------------------------------   */
 
 function createpage ($pn, $text)
 # fct intermédiaire pour rendre le code plus lisible
 {
-	global $wpapi;
-	$reason = 'init archive';
-	
-	echo "Creating [[$pn]]";
-	$wpapi->edit ($pn, $text, $reason) ;
-	
-	echo "...\n";
-	sleep(30);
+        global $wpapi;
+        $reason = 'init archive';
+
+        echo "Creating [[$pn]]";
+        $wpapi->edit ($pn, $text, $reason) ;
+
+        echo "...\n";
+        sleep(30);
 }
 
-$prefix = '/home/quentinv57/commons/';
+$prefix = '/data/project/sbot/meta/script_cabot/';
 
 # Inclusion des fichiers de configuration
 include $prefix. 'class/http.class.php';
@@ -35,8 +35,8 @@ include $prefix. 'class/wikiapi.class.php';
 include $prefix. 'class/wikiadmin.class.php';
 
 define('WIKIURL', 'meta.wikimedia.org');
-define('WIKIUSERNAME', 'QuentinvBot');
-define('WIKIUSERPASSWD', '');
+define('WIKIUSERNAME', 'SrBot');
+define('WIKIUSERPASSWD', '**PASSWD**');
 #exit("Maintenance de bot : le script doit être testé au moins une fois manuellement pour vérifier les derniers changements\n");
 
 $wpapi = new wikipediaapi(WIKIURL);
@@ -76,8 +76,8 @@ $array_feed = array(
 |}
 ",
 
-'Steward requests/Checkuser/' => "__NOINDEX__ 
-{{archive header}} 
+'Steward requests/Checkuser/' => "__NOINDEX__
+{{archive header}}
 [[Category:Steward requests archive/Checkuser]]
 
 == Requests ==
@@ -91,21 +91,23 @@ $array_feed = array(
 == Requests for global (un)lock and (un)hiding ==
 ",
 
-'Steward requests/Global permissions/' => "__NOINDEX__ 
-{{archive header}} 
+'Steward requests/Global permissions/' => "__NOINDEX__
+{{archive header}}
 [[Category:Steward requests archive/Global permissions]]
 
 == Requests for global rollback permissions ==
 
 == Requests for global sysop permissions ==
 
-== Requests for global editinterface permissions ==
-
 == Requests for global IP block exemption ==
+
+== Requests for global rename permissions ==
+
+== Requests for other global permissions ==
 ",
 
-'Steward requests/Bot status/' => "__NOINDEX__ 
-{{archive-header}} 
+'Steward requests/Bot status/' => "__NOINDEX__
+{{archive-header}}
 [[Category:Steward requests archive/Bot status]]
 
 == Global bot status requests ==
@@ -117,8 +119,8 @@ $array_feed = array(
 == Removal of bot status ==
 ",
 
-'Steward requests/Permissions/' => "__NOINDEX__ 
-{{archive header}} 
+'Steward requests/Permissions/' => "__NOINDEX__
+{{archive header}}
 [[Category:Steward requests archive/Permissions]]
 
 == Administrator access ==
@@ -136,45 +138,30 @@ $array_feed = array(
 == Miscellaneous requests ==
 ",
 
-'Steward requests/SUL requests/' => "__NOINDEX__ 
-{{archive header}} 
-[[Category:Steward requests archive/SUL requests]]
-
-== Requests ==
-",
-
-'Meta:Changing username/Archives/' => "{{archive header}}
-[[Category:Closed Meta-Wiki requests for changing username|Changing username]]
-
-==Requests==
-",
-
-'Steward requests/Username changes/' => "__NOINDEX__ 
-{{archive header}} 
+'Steward requests/Username changes/' => "__NOINDEX__
+{{archive header}}
 [[Category:Steward requests archive/Username changes]]
 
-== Requests for renaming your own account ==
-
-== Requests for renaming an account of another person ==
+== Requests ==
 "
 );
 
-if (date('m')!=12)	$sfx = date('Y') . '-' . str_pad((date('m')+1), 2, 0, STR_PAD_LEFT) ;
-else				$sfx = (date('Y')+1) . '-' . '01';
+if (date('m')!=12)      $sfx = date('Y') . '-' . str_pad((date('m')+1), 2, 0, STR_PAD_LEFT) ;
+else                            $sfx = (date('Y')+1) . '-' . '01';
 
 foreach($array_feed as $pn => $text)
 {
-	$pn .= $sfx ;
+        $pn .= $sfx ;
 
-	if ($wpapi->page_empty($pn))
-	{		
-		createpage($pn, $text);
-	}
-	else echo "Skipping [[$pn]] (already created)\n";
+        if ($wpapi->page_empty($pn))
+        {
+                createpage($pn, $text);
+        }
+        else echo "Skipping [[$pn]] (already created)\n";
 }
 
 
 
 
-	
+
 ?>
