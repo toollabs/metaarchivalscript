@@ -35,8 +35,8 @@ include $prefix. 'class/wikiapi.class.php';
 include $prefix. 'class/wikiadmin.class.php';
 
 define('WIKIURL', 'meta.wikimedia.org');
-define('WIKIUSERNAME', 'SrBot');
-define('WIKIUSERPASSWD', '**PASSWD**');
+define('WIKIUSERNAME', 'SteinsplitterBot');
+define('WIKIUSERPASSWD', 'duh');
 #exit("Maintenance de bot : le script doit être testé au moins une fois manuellement pour vérifier les derniers changements\n");
 
 $wpapi = new wikipediaapi(WIKIURL);
@@ -142,7 +142,9 @@ $array_feed = array(
 {{archive header}}
 [[Category:Steward requests archive/Username changes]]
 
-== Requests ==
+== Global requests ==
+
+== Requests with usurps and complex renames ==
 "
 );
 
