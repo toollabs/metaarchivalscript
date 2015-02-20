@@ -29,6 +29,7 @@ Meta Archival Script
 
 Here are the settings
 (you can set a value of $nbdays to 0 to skip the page)
+|cannot|withdrawn|local - todo
 
 */
 
@@ -58,8 +59,8 @@ $settings_archives = array (
 
         'Steward requests/Global permissions' => array( 'subpage' => 'Steward requests/Global permissions/',
                                                                                                         'nbdays' => 2,
-                                                                                                        'subsections' => array('Requests for global rollback permissions','Requests for global sysop permissions','Requests for global IP block exemption','Requests for global rename permissions','Requests for other global permissions'),
-                                                                                                        'match' => $settings_match['sc_templates']),
+                                                                                                        'subsections' => array('Requests for global IP block exemption','Requests for global rename permissions','Requests for other global permissions'),
+                                                                                                        'match' => $settings_match['status_param']),
 
         'Steward requests/Bot status' => array( 'subpage' => 'Steward requests/Bot status/',
                                                                                         'nbdays' => 2, // previously 3
@@ -74,7 +75,7 @@ $settings_archives = array (
 
         'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
-                                                                                                        'subsections' => array('Requests'),
+                                                                                                        'subsections' => array('Global requests','Requests with usurps and complex renames'),
                                                                                                         'match' => $settings_match['status_param'])
         );
 
@@ -93,8 +94,8 @@ define ('DONTARCHIVESECT','{{User:SteinsplitterBot/DoNotArchiveSect}}');
 
 define('WIKIURL', 'meta.wikimedia.org');
 #define('WIKIURL', 'test.wikipedia.org');
-define('WIKIUSERNAME', 'Bot');
-define('WIKIUSERPASSWD', '**PASSAWD**');
+define('WIKIUSERNAME', 'SteinsplitterBot');
+define('WIKIUSERPASSWD', 'duh');
 
 #exit("Maintenance de bot : le script doit être testé au moins une fois manuellement pour vérifier les derniers changements\n");
 
