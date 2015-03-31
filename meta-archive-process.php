@@ -23,6 +23,7 @@ Meta Archival Script
                 * [[Steward requests/SUL requests]] (removed, outdated)
                 * [[Meta:Changing username]] (removed, outdated)
                 * [[Steward requests/Username changes]]
+                * [[Steward requests/Miscellaneous]]
 
 ---------------------------------------------
 
@@ -73,6 +74,11 @@ $settings_archives = array (
                                                                                                 'match' => $settings_match['status_param'],
                                                                                                 'lvlsect' => 3),
 
+        'Steward requests/Miscellaneous' => array(        'subpage' => 'Steward requests/Miscellaneous/',
+                                                                                                'nbdays' => 2,
+                                                                                                'subsections' => array('Manual requests'),
+                                                                                                'match' => $settings_match['sb_templates']),
+
         'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
                                                                                                         'subsections' => array('Global requests','Requests with usurps and complex renames'),
@@ -95,7 +101,7 @@ define ('DONTARCHIVESECT','{{User:SteinsplitterBot/DoNotArchiveSect}}');
 define('WIKIURL', 'meta.wikimedia.org');
 #define('WIKIURL', 'test.wikipedia.org');
 define('WIKIUSERNAME', 'SteinsplitterBot');
-define('WIKIUSERPASSWD', 'duh');
+define('WIKIUSERPASSWD', 'duh!');
 
 #exit("Maintenance de bot : le script doit être testé au moins une fois manuellement pour vérifier les derniers changements\n");
 
