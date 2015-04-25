@@ -40,7 +40,7 @@ $settings_match = array (       'status_template'       => '#\{\{status\|((not )
                                                         'sb_templates'          => '#\{\{(added|declined|removed|(not )?done|closing)\}\}#i',
                                                         'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not )?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
-                                                        'removetemp'            => '#\'\'\'removed\'\'\'#i'     );
+                                                        'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'#i'        );
 
 $settings_archives = array (
         'Talk:Spam blacklist' => array( 'subpage' => 'Talk:Spam blacklist/Archives/',
@@ -81,7 +81,7 @@ $settings_archives = array (
 
         'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
-                                                                                                        'subsections' => array('Global requests','Requests with usurps and complex renames'),
+                                                                                                        'subsections' => array('Simple rename requests','Requests with usurps and complex renames'),
                                                                                                         'match' => $settings_match['status_param'])
         );
 
@@ -101,7 +101,7 @@ define ('DONTARCHIVESECT','{{User:SteinsplitterBot/DoNotArchiveSect}}');
 define('WIKIURL', 'meta.wikimedia.org');
 #define('WIKIURL', 'test.wikipedia.org');
 define('WIKIUSERNAME', 'SteinsplitterBot');
-define('WIKIUSERPASSWD', 'duh!');
+define('WIKIUSERPASSWD', '');
 
 #exit("Maintenance de bot : le script doit être testé au moins une fois manuellement pour vérifier les derniers changements\n");
 
