@@ -81,7 +81,7 @@ $settings_archives = array (
 
         'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
-                                                                                                        'subsections' => array('Simple rename requests','Requests with usurps and complex renames'),
+                                                                                                        'subsections' => array('Simple rename requests','Requests involving usurps or other complications'),
                                                                                                         'match' => $settings_match['status_param'])
         );
 
