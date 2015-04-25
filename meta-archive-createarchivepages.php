@@ -150,7 +150,7 @@ $array_feed = array(
 
 == Simple rename requests ==
 
-== Requests with usurps and complex renames ==
+== Requests involving usurps or other complications ==
 "
 );
 
