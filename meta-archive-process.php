@@ -40,6 +40,7 @@ $settings_match = array (       'status_template'       => '#\{\{status\|((not )
                                                         'sb_templates'          => '#\{\{(added|declined|removed|(not )?done|closing)\}\}#i',
                                                         'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not )?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
+                                                        'st_templates'          => '#\{\{status\|(added|declined|removed|(not )?done|closing)\}\}#i',
                                                         'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'#i'        );
 
 $settings_archives = array (
@@ -77,7 +78,7 @@ $settings_archives = array (
         'Steward requests/Miscellaneous' => array(        'subpage' => 'Steward requests/Miscellaneous/',
                                                                                                 'nbdays' => 2,
                                                                                                 'subsections' => array('Manual requests'),
-                                                                                                'match' => $settings_match['sb_templates']),
+                                                                                                'match' => $settings_match['st_templates']),
 
         'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
