@@ -8,7 +8,7 @@ Licence : GNU General Public License v3
                         (see http://www.gnu.org/licenses/)
 
 Date of creation : 2011-04
-Last modified : 14 November 2014
+Last modified : 4 June 2015 by Steinsplitter
 
 Meta Archival Script - creates all archive pages
 
@@ -24,7 +24,7 @@ function createpage ($pn, $text)
         $wpapi->edit ($pn, $text, $reason) ;
 
         echo "...\n";
-        sleep(30);
+        sleep(5);
 }
 
 $prefix = '/data/project/sbot/meta/script_cabot/';
