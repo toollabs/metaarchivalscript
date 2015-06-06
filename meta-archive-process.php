@@ -30,17 +30,16 @@ Meta Archival Script
 
 Here are the settings
 (you can set a value of $nbdays to 0 to skip the page)
-|cannot|withdrawn|local - todo
 
 */
 
 $settings_match = array (       'status_template'       => '#\{\{status\|((not )?done|cannot|withdrawn|local)\}\}#i',
-                                                        'status_param'          => '#(\| *status *= *(<!--.*-->)?((not )?done|cannot|withdrawn|local)|\{\{status\|((not )?done|cannot|withdrawn|local)\}\})#iU',
-                                                        // 20111009 : replace '#\| *status *= *(<!--.*-->)?(not )?done#iU' by '#(\| *status *= *(<!--.*-->)?(not )?done|\{\{status\|(not )?done\}\})#iU' > enable the use of the status template everywhere
-                                                        'sb_templates'          => '#\{\{(added|declined|removed|(not )?done|closing)\}\}#i',
+                                                        'status_param'          => '#(\| *status *= *(<!--.*-->)?((not )?done|cannot|withdrawn|local)|\{\{status\|((not )?done|cannot|withdrawn|loca$
+                                                        // 20111009 : replace '#\| *status *= *(<!--.*-->)?(not )?done#iU' by '#(\| *status *= *(<!--.*-->)?(not )?done|\{\{status\|(not )?done\}\})$
+                                                        'sb_templates'          => '#\{\{(added|declined|cannot|removed|(not )?done|closing)\}\}#i',
                                                         'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not )?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
-                                                        'st_templates'          => '#\{\{status\|(added|declined|removed|(not )?done|closing)\}\}#i',
+                                                        'st_templates'          => '#\{\{status\|(added|declined|cannot|removed|(not )?done|closing)\}\}#i',
                                                         'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'#i'        );
 
 $settings_archives = array (
