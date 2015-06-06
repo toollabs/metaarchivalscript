@@ -39,7 +39,7 @@ $settings_match = array (       'status_template'       => '#\{\{status\|((not )
                                                         'sb_templates'          => '#\{\{(added|declined|cannot|removed|(not )?done|closing)\}\}#i',
                                                         'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not )?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
-                                                        'st_templates'          => '#\{\{status\|(added|declined|cannot|removed|(not )?done|closing)\}\}#i',
+                                                        'st_templates'          => '#\{\{status\|(added|declined|removed|(not )?done|closing|cannot)\}\}#i',
                                                         'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'#i'        );
 
 $settings_archives = array (
