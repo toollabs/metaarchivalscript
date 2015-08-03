@@ -33,7 +33,7 @@ Here are the settings
 
 */
 
-$settings_match = array (       'status_template'       => '#\{\{status\|((not )?done|cannot|withdrawn|local)\}\}#i',
+$settings_match = array (       'status_template'       => '#\{\{status\|((not )?done|cannot|withdrawn|local)+(|\|.*)\}\}#i',
                                                         'status_param'          => '#(\| *status *= *(<!--.*-->)?((not )?done|cannot|withdrawn|local)|\{\{status\|((not )?done|cannot|withdrawn|loca$
                                                         // 20111009 : replace '#\| *status *= *(<!--.*-->)?(not )?done#iU' by '#(\| *status *= *(<!--.*-->)?(not )?done|\{\{status\|(not )?done\}\})$
                                                         'sb_templates'          => '#\{\{(added|declined|cannot|removed|(not )?done|closing)\}\}#i',
