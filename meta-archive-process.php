@@ -33,13 +33,13 @@ Here are the settings
 
 */
 
-$settings_match = array (       'status_template'       => '#\{\{status\|((not )?done|cannot|withdrawn|local)+(|\|.*)\}\}#i',
-                                                        'status_param'          => '#(\| *status *= *(<!--.*-->)?((not )?done|cannot|withdrawn|local)|\{\{status\|((not )?done|cannot|withdrawn|loca$
-                                                        // 20111009 : replace '#\| *status *= *(<!--.*-->)?(not )?done#iU' by '#(\| *status *= *(<!--.*-->)?(not )?done|\{\{status\|(not )?done\}\})$
-                                                        'sb_templates'          => '#\{\{(added|declined|cannot|removed|(not )?done|closing)\}\}#i',
-                                                        'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not )?done|cannot|withdrawn|local#iU',
+$settings_match = array (       'status_template'       => '#\{\{status\|((not |not)?done|cannot|withdrawn|local)+(|\|.*)\}\}#i',
+                                                        'status_param'          => '#(\| *status *= *(<!--.*-->)?((not |not)?done|cannot|withdrawn|local)|\{\{status\|((not |not)?done|cannot|withdrawn|local)\}\})#iU',
+                                                        // 20111009 : replace '#\| *status *= *(<!--.*-->)?(not |not)?done#iU' by '#(\| *status *= *(<!--.*-->)?(not |not)?done|\{\{status\|(not |not)?done\}\})#iU' > enable the use of the status template everywhere
+                                                        'sb_templates'          => '#\{\{(added|declined|cannot|removed|(not |not)?done|closing)\}\}#i',
+                                                        'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not |not)?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
-                                                        'st_templates'          => '#\{\{status\|(added|declined|removed|(not )?done|closing|cannot)\}\}#i',
+                                                        'st_templates'          => '#\{\{status\|(added|declined|removed|(not |not)?done|closing|cannot)\}\}#i',
                                                         'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'#i'        );
 
 $settings_archives = array (
