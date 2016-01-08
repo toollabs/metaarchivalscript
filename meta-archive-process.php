@@ -40,7 +40,7 @@ $settings_match = array (       'status_template'       => '#\{\{status\|((not |
                                                         'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not |not)?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
                                                         'st_templates'          => '#\{\{status\|(added|declined|removed|(not |not)?done|closing|cannot)\}\}#i',
-                                                        'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'#i'        );
+                                                        'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'|\{\{removed\}\}|\{\{extended\}\}#i'        );
 
 $settings_archives = array (
         'Talk:Spam blacklist' => array( 'subpage' => 'Talk:Spam blacklist/Archives/',
