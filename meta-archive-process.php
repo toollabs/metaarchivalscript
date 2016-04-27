@@ -1,14 +1,14 @@
-<?php
+﻿<?php
 
 /*   ---------------------------------------------
 
-Author : Quentinv57
+Author : Quentinv57 (2011 - 2014)
+         Steinsplitter (2014 - )
 
 Licence : GNU General Public License v3
                         (see http://www.gnu.org/licenses/)
 
 Date of creation : 2011-03
-Last modified : 14 November 2014
 
 Meta Archival Script
         -> archive steward requests on the following pages :
@@ -40,7 +40,7 @@ $settings_match = array (       'status_template'       => '#\{\{status\|((not |
                                                         'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not |not)?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
                                                         'st_templates'          => '#\{\{status\|(added|declined|removed|(not |not)?done|closing|cannot)\}\}#i',
-                                                        'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'|\{\{removed\}\}|\{\{extended\}\}#i'        );
+                                                        'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'|\{\{removed\}\}|\{\{extended\}\}#i'       );
 
 $settings_archives = array (
         'Talk:Spam blacklist' => array( 'subpage' => 'Talk:Spam blacklist/Archives/',
@@ -81,7 +81,7 @@ $settings_archives = array (
 
         'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
-                                                                                                        'subsections' => array('Simple rename requests','Requests involving usurps or other complications'),
+                                                                                                        'subsections' => array('Simple rename requests','Requests involving merges, usurps or other complications'),
                                                                                                         'match' => $settings_match['status_param'])
         );
 
@@ -98,12 +98,12 @@ $settings_archives_approvedtemp = array (       'page' => 'Steward requests/Perm
 define ('DONTARCHIVESECT','{{User:SteinsplitterBot/DoNotArchiveSect}}');
 
 
-define('WIKIURL', 'meta.wikimedia.org');
-#define('WIKIURL', 'test.wikipedia.org');
-define('WIKIUSERNAME', 'SteinsplitterBot');
-define('WIKIUSERPASSWD', '');
+//Dependency: https://github.com/MW-Peachy/Peachy
+require( '/data/project/sbot/Peachy/Peachy/Init.php' );
 
-#exit("Maintenance de bot : le script doit être testé au moins une fois manuellement pour vérifier les derniers changements\n");
+$site = Peachy::newWiki( "meta" );
+$site->set_runpage( null );
+
 
 /* ************************************************************************
 ****************************** Fonctions **********************************
@@ -294,11 +294,11 @@ function zerofill ($num, $length)
 
 function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2)
 {
-        global $wpapi;
 
+        global $site;
         echo "Working on [[$contentpagename]]...\n";
 
-        $contentpage = $wpapi->getpage($contentpagename);
+        $contentpage = $site->initPage( $contentpagename )->get_text();
         $difflen = strlen($contentpage);
         $archivepage = array();
         $archivedrequests = array('total'=>0);
@@ -356,7 +356,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
                                                 if (empty($archivepage[$lastdate_formated]))
                                                 { // si on a pas encore eu besoin de cette page d'archive, on l'initialise
-                                                        $archivepage[$lastdate_formated] = $wpapi->getpage($archivepagename.$lastdate_formated);
+                                                        $archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text();
                                                         $archivedrequests[$lastdate_formated] = 0;
 
                                                         ## INIT ARCHIVE PAGE WITH TOKEN - Begin
@@ -406,12 +406,12 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
         if ( $archivedrequests['total']>2 || ($difflen>4000) )
         { // on n'archive que si on a au moins deux requêtes (ou si la page perd plus de 5000 bytes)
                 $archivesummary = ($archivedrequests['total']>1) ? $archivedrequests['total'] . " requests archived" : "1 request archived";
-                $wpapi->edit($contentpagename, $contentpage, $archivesummary, TRUE);
+                $site->initPage( $contentpagename )->edit( $contentpage, $archivesummary );
 
                 foreach ($archivepage as $key => $value) {
                         sleep(5);
                         $archivesummary = ($archivedrequests[$key]>1) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
-                        $wpapi->edit($archivepagename.$key, $value, $archivesummary, FALSE);
+                        $site->initPage( $archivepagename.$key )->edit( $value, $archivesummary );
                 }
 
                 echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
@@ -427,12 +427,11 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
 function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2)
 {
-        global $wpapi;
-
+        global $site;
         echo "Working on [[$contentpagename]] (temp sysop requests) ...\n";
 
-        $contentpage = $wpapi->getpage($contentpagename);
-        $archivepage = $wpapi->getpage($archivepagename);
+        $contentpage = $site->initPage( $contentpagename )->get_text();
+        $archivepage = $site->initPage( $archivepagename )->get_text();
         $difflen = strlen($contentpage);
         $archivedrequests = 0;
 
@@ -548,11 +547,11 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
         if ( $archivedrequests>0 )
         { // pas de condition d'archivage pour les temp requests
                 $archivesummary = ($archivedrequests>1) ? $archivedrequests . " requests moved to [[Steward requests/Permissions/Approved temporary]]" : "1 request moved to [[Steward requests/Permissions/Approved temporary]]";
-                $wpapi->edit($contentpagename, $contentpage, $archivesummary, TRUE);
+                $site->initPage( $contentpagename )->edit( $contentpage, $archivesummary );
 
                 sleep(5);
                 $archivesummary = ($archivedrequests>1) ? $archivedrequests . " temp sysop requests archived" : "1 temp sysop request archived";
-                $wpapi->edit($archivepagename, $archivepage, $archivesummary, FALSE);
+                $site->initPage( $archivepagename )->edit( $archivepage, $archivesummary );
 
                 echo $archivedrequests . " request(s) archived with success !\n\n";
                 sleep(20);
@@ -567,11 +566,11 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 
 function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archive_subsection, $nbdaysexec, $matchregx=NULL, $lvlsect=2)
 {
-        global $wpapi;
+        global $site;
 
         echo "Working on [[$contentpagename]]...\n";
 
-        $contentpage = $wpapi->getpage($contentpagename);
+        $contentpage = $site->initPage( $contentpagename )->get_text();
         $difflen = strlen($contentpage);
         $archivepage = array();
         $archivedrequests = array('total'=>0);
@@ -602,7 +601,7 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
 
                                         if (empty($archivepage[$lastdate_formated]))
                                         { // si on a pas encore eu besoin de cette page d'archive, on l'initialise
-                                                $archivepage[$lastdate_formated] = $wpapi->getpage($archivepagename.$lastdate_formated);
+                                                $archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text();
                                                 $archivedrequests[$lastdate_formated] = 0;
 
                                                 ## INIT ARCHIVE PAGE WITH TOKEN - Begin
@@ -657,12 +656,12 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
         if ( $archivedrequests['total']>2 || ($difflen>4000) ) // + lastdate <---------- todo !
         { // on n'archive que si on a au moins deux requêtes (ou si la page perd plus de 5000 bytes)
                 $archivesummary = ($archivedrequests['total']>1) ? $archivedrequests['total'] . " requests archived" : "1 request archived";
-                $wpapi->edit($contentpagename, $contentpage, $archivesummary, TRUE);
+                $site->initPage( $contentpagename )->edit( $contentpage, $archivesummary );
 
                 foreach ($archivepage as $key => $value) {
                         sleep(5);
                         $archivesummary = ($archivedrequests[$key]>1) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
-                        $wpapi->edit($archivepagename.$key, $value, $archivesummary, FALSE);
+                        $site->initPage( $archivepagename.$key )->edit( $value, $archivesummary );
                 }
 
                 echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
@@ -679,17 +678,6 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
 /* done 2011-04-23 */
 
 $prefix = '/data/project/sbot/meta/script_cabot/';
-
-# Inclusion des fichiers de configuration
-include $prefix. 'class/http.class.php';
-include $prefix. 'class/wikiapi.class.php';
-include $prefix. 'class/wikiadmin.class.php';
-
-$wpapi = new wikipediaapi(WIKIURL);
-$wpadm = new wikipediaadmin(WIKIURL);
-
-# Connexion à Wikipédia
-$wpapi->login ( WIKIUSERNAME, WIKIUSERPASSWD ) ;
 
 
 foreach ($settings_archives as $arcpagetitle => $arcpageset)

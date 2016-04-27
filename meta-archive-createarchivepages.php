@@ -1,14 +1,14 @@
-<?php
+﻿<?php
 
 /*   ---------------------------------------------
 
-Author : Quentinv57
+Author : Quentinv57 (2011 - 2014)
+         Steinsplitter (2014 - )
 
 Licence : GNU General Public License v3
                         (see http://www.gnu.org/licenses/)
 
 Date of creation : 2011-04
-Last modified : 4 June 2015 by Steinsplitter
 
 Meta Archival Script - creates all archive pages
 
@@ -17,35 +17,21 @@ Meta Archival Script - creates all archive pages
 function createpage ($pn, $text)
 # fct intermédiaire pour rendre le code plus lisible
 {
-        global $wpapi;
+        global $site;
         $reason = 'init archive';
 
         echo "Creating [[$pn]]";
-        $wpapi->edit ($pn, $text, $reason) ;
+        $site->initPage( $pn )->edit( $text, $reason );
 
         echo "...\n";
         sleep(5);
 }
 
-$prefix = '/data/project/sbot/meta/script_cabot/';
+//Dependency: https://github.com/MW-Peachy/Peachy
+require( '/data/project/sbot/Peachy/Peachy/Init.php' );
 
-# Inclusion des fichiers de configuration
-include $prefix. 'class/http.class.php';
-include $prefix. 'class/wikiapi.class.php';
-include $prefix. 'class/wikiadmin.class.php';
-
-define('WIKIURL', 'meta.wikimedia.org');
-define('WIKIUSERNAME', 'SteinsplitterBot');
-define('WIKIUSERPASSWD', '');
-#exit("Maintenance de bot : le script doit être testé au moins une fois manuellement pour vérifier les derniers changements\n");
-
-$wpapi = new wikipediaapi(WIKIURL);
-$wpadm = new wikipediaadmin(WIKIURL);
-
-# Connexion à Wikipédia
-$wpapi->login ( WIKIUSERNAME, WIKIUSERPASSWD ) ;
-
-
+$site = Peachy::newWiki( "meta" );
+$site->set_runpage( null );
 
 $array_feed = array(
 'Talk:Spam blacklist/Archives/' => "{{Archive header}}
@@ -150,7 +136,7 @@ $array_feed = array(
 
 == Simple rename requests ==
 
-== Requests involving usurps or other complications ==
+== Requests involving merges, usurps or other complications ==
 "
 );
 
@@ -159,17 +145,16 @@ else                            $sfx = (date('Y')+1) . '-' . '01';
 
 foreach($array_feed as $pn => $text)
 {
+        global $site;
         $pn .= $sfx ;
+        $esum = "" ;
 
-        if ($wpapi->page_empty($pn))
+        $es = $site->initPage( $pn );
+        if( !($es->get_exists()) )
         {
-                createpage($pn, $text);
+                $site->initPage( $pn )->edit( $text, $reason );
         }
         else echo "Skipping [[$pn]] (already created)\n";
 }
-
-
-
-
 
 ?>
