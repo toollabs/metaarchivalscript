@@ -77,7 +77,7 @@ $settings_archives = array (
         'Steward requests/Miscellaneous' => array(        'subpage' => 'Steward requests/Miscellaneous/',
                                                                                                 'nbdays' => 2,
                                                                                                 'subsections' => array('Manual requests'),
-                                                                                                'match' => $settings_match['st_templates']),
+                                                                                                'match' => $settings_match['status_param']),
 
         'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
