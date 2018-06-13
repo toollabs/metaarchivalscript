@@ -298,7 +298,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
         global $site;
         echo "Working on [[$contentpagename]]...\n";
 
-        $contentpage = $site->initPage( $contentpagename )->get_text();
+        $contentpage = $site->initPage( $contentpagename )->get_text( $force = true );
         $difflen = strlen($contentpage);
         $archivepage = array();
         $archivedrequests = array('total'=>0);
@@ -356,7 +356,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
                                                 if (empty($archivepage[$lastdate_formated]))
                                                 { // si on a pas encore eu besoin de cette page d'archive, on l'initialise
-                                                        $archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text();
+                                                        $archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text( $force = true );
                                                         $archivedrequests[$lastdate_formated] = 0;
 
                                                         ## INIT ARCHIVE PAGE WITH TOKEN - Begin
@@ -430,8 +430,8 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
         global $site;
         echo "Working on [[$contentpagename]] (temp sysop requests) ...\n";
 
-        $contentpage = $site->initPage( $contentpagename )->get_text();
-        $archivepage = $site->initPage( $archivepagename )->get_text();
+        $contentpage = $site->initPage( $contentpagename )->get_text( $force = true );
+        $archivepage = $site->initPage( $archivepagename )->get_text( $force = true );
         $difflen = strlen($contentpage);
         $archivedrequests = 0;
 
@@ -570,7 +570,7 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
 
         echo "Working on [[$contentpagename]]...\n";
 
-        $contentpage = $site->initPage( $contentpagename )->get_text();
+        $contentpage = $site->initPage( $contentpagename )->get_text( $force = true );
         $difflen = strlen($contentpage);
         $archivepage = array();
         $archivedrequests = array('total'=>0);
@@ -601,7 +601,7 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
 
                                         if (empty($archivepage[$lastdate_formated]))
                                         { // si on a pas encore eu besoin de cette page d'archive, on l'initialise
-                                                $archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text();
+                                                $archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text( $force = true );
                                                 $archivedrequests[$lastdate_formated] = 0;
 
                                                 ## INIT ARCHIVE PAGE WITH TOKEN - Begin
