@@ -14,9 +14,8 @@ Meta Archival Script - creates all archive pages
 
 ---------------------------------------------   */
 
-function createpage ($pn, $text)
+function createpage ($pn, $text) {
 # fct intermédiaire pour rendre le code plus lisible
-{
         global $site;
         $reason = 'init archive';
 

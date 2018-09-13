@@ -95,7 +95,7 @@ $settings_archives_approvedtemp = [       'page' => 'Steward requests/Permission
                                                                                         'arc_subsection' => 'Temporary permissions (expired and rejected requests only)',
                                                                                         'nbdays' => 0,
                                                                                         'match' => $settings_match['removetemp'] ]; // archive requests on [[Steward requests/Permissions/Approved temporary]]
-define ('DONTARCHIVESECT','{{User:SteinsplitterBot/DoNotArchiveSect}}');
+define ('DONTARCHIVESECT', '{{User:SteinsplitterBot/DoNotArchiveSect}}');
 
 
 //Dependency: https://github.com/MW-Peachy/Peachy
@@ -109,14 +109,12 @@ $site->set_runpage( null );
 ****************************** Fonctions **********************************
 ************************************************************************ */
 
-function preg_quote_magic ($foo)
+function preg_quote_magic ($foo) {
 # Retire tous les meta caractères (avec le #)
-{
-        return str_replace('#','\#',preg_quote($foo));
+        return str_replace('#', '\#', preg_quote($foo));
 }
 
-function get_content_by_section ($texte, $lvlsect)
-{
+function get_content_by_section ($texte, $lvlsect) {
         $result = [];
 
         $motif = '';
@@ -171,8 +169,7 @@ function get_content_by_section ($texte, $lvlsect)
         return $result;
 }
 
-function NumberMonth ($foo)
-{
+function NumberMonth ($foo) {
         switch ($foo)
         {
                 case 'January':         return 1;
@@ -191,8 +188,7 @@ function NumberMonth ($foo)
         }
 }
 
-function FooMonth ($nb)
-{
+function FooMonth ($nb) {
         switch ($nb)
         {
                 case 1:                         return 'January';
@@ -211,8 +207,8 @@ function FooMonth ($nb)
         }
 }
 
-function get_last_date ($text)
-{ // retourne la dernière date trouvée dans le texte
+function get_last_date ($text) {
+ // retourne la dernière date trouvée dans le texte
         $date = preg_match_all("#([1-9]|[1-2][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4}) \(UTC\)#i", $text, $matches);
         $lastdate = [];
 
@@ -233,8 +229,8 @@ function get_last_date ($text)
         return $lastdate;
 }
 
-function get_expiring_date ($sectiontext)
-{ // extensions temp_sysop
+function get_expiring_date ($sectiontext) {
+ // extensions temp_sysop
         preg_match ("#([1-9]|[1-2][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4})#i", $sectiontext, $matches);
 
         $d = intval($matches[1]);
@@ -246,9 +242,9 @@ function get_expiring_date ($sectiontext)
         return $lastdate;
 }
 
-function is_last_x_days ($date, $nbdays)
-{ // TRUE si la date $date est plus vieille qu'il y a $nbdays jours
-        $time = mktime (0,0,1, $date['m'], $date['d'], $date['y']);
+function is_last_x_days ($date, $nbdays) {
+ // TRUE si la date $date est plus vieille qu'il y a $nbdays jours
+        $time = mktime (0, 0, 1, $date['m'], $date['d'], $date['y']);
         $time += $nbdays * 3600 * 24;
 
         if ($time<=time()) {      return TRUE;
@@ -256,15 +252,13 @@ function is_last_x_days ($date, $nbdays)
         }
 }
 
-function lastmonth ()
-{
+function lastmonth () {
         if (date('m')!=1) {       return date('Y') . '-' . str_pad((date('m')-1), 2, 0, STR_PAD_LEFT) ;
         } else {                            return (date('Y')-1) . '-' . '12';
         }
 }
 
-function numtoken ($length)
-{
+function numtoken ($length) {
    $result = '';
 
    for ($i=0; $i<=$length; $i++) {
@@ -274,8 +268,7 @@ function numtoken ($length)
    return $result;
 }
 
-function zerofill ($num, $length)
-{
+function zerofill ($num, $length) {
         $result = $num;
 
         for ($i=0; $i<($length-strlen($num)); $i++) {
@@ -298,8 +291,7 @@ function zerofill ($num, $length)
         $lvlsect (facultatif) est le niveau des sections données dans $subsections
 */
 
-function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2)
-{
+function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2) {
 
         global $site;
         echo "Working on [[$contentpagename]]...\n";
@@ -340,12 +332,12 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                                         $archivepage[$key] = str_replace ($matches[2], $token.$matches[2], $archivepage[$key]);
                                 } else // le problème d'archivage *venait* d'ici
                                 {
-                                        if (!preg_match("#".$actumotif."#",$archivepage[$key])) { exit('Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (1) - unable to find "'.$actumotif.'" in "'.$key.'"');
+                                        if (!preg_match("#".$actumotif."#", $archivepage[$key])) { exit('Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (1) - unable to find "'.$actumotif.'" in "'.$key.'"');
                                         } else { $archivepage[$key] .= $token;
                                         }
                                 }
 
-                                if (!preg_match("#\n".$token."#",$archivepage[$key])) {
+                                if (!preg_match("#\n".$token."#", $archivepage[$key])) {
                                         $archivepage[$key] = str_replace($token, "\n".$token, $archivepage[$key]);
                                 }
                                 ## INIT ARCHIVE PAGE WITH TOKEN - End
@@ -360,7 +352,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                                 { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
                                         $lastdate = get_last_date($sect1[$key]['content']);
 
-                                        if (!empty($lastdate) AND is_last_x_days($lastdate,$nbdaysexec))
+                                        if (!empty($lastdate) AND is_last_x_days($lastdate, $nbdaysexec))
                                         {
                                                 $lastdate_formated = $lastdate['y'].'-'.str_pad($lastdate['m'], 2, 0, STR_PAD_LEFT);
 
@@ -374,7 +366,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                                                                 $archivepage[$lastdate_formated] = str_replace ($matches[2], $token.$matches[2], $archivepage[$lastdate_formated]);
                                                         } else // le problème d'archivage *venait* d'ici
                                                         {
-                                                                if (!preg_match("#".$actumotif."#",$archivepage[$lastdate_formated])) {
+                                                                if (!preg_match("#".$actumotif."#", $archivepage[$lastdate_formated])) {
                                                                         // var_dump($archivepage[$lastdate_formated]);
                                                                         exit('Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (2) - unable to find '.$actumotif.' in '.$lastdate_formated);
                                                                 } else {
@@ -383,10 +375,10 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                                                                 }
                                                         }
 
-                                                        if (!preg_match("#\n".$token."#",$archivepage[$lastdate_formated])) {
+                                                        if (!preg_match("#\n".$token."#", $archivepage[$lastdate_formated])) {
                                                                 $archivepage[$lastdate_formated] = str_replace($token, "\n".$token, $archivepage[$lastdate_formated]);
                                                         }
-                                                        if (!preg_match("#".$token."\n#",$archivepage[$lastdate_formated])) {
+                                                        if (!preg_match("#".$token."\n#", $archivepage[$lastdate_formated])) {
                                                                 $archivepage[$lastdate_formated] = str_replace($token, $token."\n", $archivepage[$lastdate_formated]);
                                                         }
                                                         ## INIT ARCHIVE PAGE WITH TOKEN - End
@@ -441,8 +433,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 ************************ Extension temp_sysop  ****************************
 ************************************************************************ */
 
-function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2)
-{
+function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2) {
         global $site;
         echo "Working on [[$contentpagename]] (temp sysop requests) ...\n";
 
@@ -484,14 +475,14 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                         foreach ($archivesect as $key => $value)
                         {
                                 $expiredate = get_expiring_date($archivesect[$key]['title']);
-                                $archivesect[$key]['date'] = $expiredate['y'].zerofill($expiredate['m'],2).zerofill($expiredate['d'],2);
+                                $archivesect[$key]['date'] = $expiredate['y'].zerofill($expiredate['m'], 2).zerofill($expiredate['d'], 2);
                         }
                         // Sort by date BEGIN
                         $archivedsect_date =[];
                         foreach ($archivedsect as $value2) {
                                 $archivedsect_date[] =$value2['date'];
                         }
-                        array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
+                        array_multisort($archivedsect_date, SORT_NUMERIC, $archivedsect);
                         // Sort by date END
 
                         foreach ($sect1 as $key => $value)
@@ -500,7 +491,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                 { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
                                         $lastdate = get_last_date($sect1[$key]['content']);
 
-                                        if (!empty($lastdate) AND is_last_x_days($lastdate,$nbdaysexec))
+                                        if (!empty($lastdate) AND is_last_x_days($lastdate, $nbdaysexec))
                                         {
                                                 // get template data :
                                                 $template_data['delay'] = $matches[1];
@@ -549,7 +540,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                                 foreach ($archivedsect as $value2) {
                                                         $archivedsect_date[] =$value2['date'];
                                                 }
-                                                array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
+                                                array_multisort($archivedsect_date, SORT_NUMERIC, $archivedsect);
                                                 // Sort by date END
                                         }
                                 }
@@ -586,8 +577,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 ************************ Extension approved_temp  ****************************
 ************************************************************************ */
 
-function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archive_subsection, $nbdaysexec, $matchregx=NULL, $lvlsect=2)
-{
+function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archive_subsection, $nbdaysexec, $matchregx=NULL, $lvlsect=2) {
         global $site;
 
         echo "Working on [[$contentpagename]]...\n";
@@ -617,7 +607,7 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
                                 { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
                                 $lastdate = get_last_date($sect1[$key]['content']);
 
-                                if (!empty($lastdate) AND is_last_x_days($lastdate,$nbdaysexec))
+                                if (!empty($lastdate) AND is_last_x_days($lastdate, $nbdaysexec))
                                 {
                                         $lastdate_formated = $lastdate['y'].'-'.str_pad($lastdate['m'], 2, 0, STR_PAD_LEFT);
 
@@ -631,7 +621,7 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
                                                         $archivepage[$lastdate_formated] = str_replace ($matches[2], $token.$matches[2], $archivepage[$lastdate_formated]);
                                                 } else // le problème d'archivage *venait* d'ici
                                                 {
-                                                        if (!preg_match("#".$actumotif."#",$archivepage[$lastdate_formated])) {
+                                                        if (!preg_match("#".$actumotif."#", $archivepage[$lastdate_formated])) {
                                                                 // var_dump($archivepage[$lastdate_formated]);
                                                                 exit('Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (2) - unable to find '.$actumotif.' in '.$lastdate_formated);
                                                         } else {
@@ -640,10 +630,10 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
                                                         }
                                                 }
 
-                                                if (!preg_match("#\n".$token."#",$archivepage[$lastdate_formated])) {
+                                                if (!preg_match("#\n".$token."#", $archivepage[$lastdate_formated])) {
                                                         $archivepage[$lastdate_formated] = str_replace($token, "\n".$token, $archivepage[$lastdate_formated]);
                                                 }
-                                                if (!preg_match("#".$token."\n#",$archivepage[$lastdate_formated])) {
+                                                if (!preg_match("#".$token."\n#", $archivepage[$lastdate_formated])) {
                                                         $archivepage[$lastdate_formated] = str_replace($token, $token."\n", $archivepage[$lastdate_formated]);
                                                 }
                                                 ## INIT ARCHIVE PAGE WITH TOKEN - End
