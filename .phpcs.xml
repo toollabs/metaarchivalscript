@@ -4,7 +4,6 @@
 		<exclude name="Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed" />
 		<exclude name="Generic.Files.ByteOrderMark.Found" />
 		<exclude name="Generic.Files.LineLength.TooLong" />
-		<exclude name="Generic.Formatting.MultipleStatementAlignment.IncorrectWarning" />
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterComma" />
 		<exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine" />
 		<exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie.ContentAfterBrace" />

@@ -141,7 +141,7 @@ function get_content_by_section ($texte, $lvlsect)
         $result[0]['content'] = $matches[1];
 
 
-        $i=1;
+        $i =1;
         foreach ($listesections as $key => $value) {
                 // sections (1 à n-1)
                 if ($i<count($listesections))
@@ -487,9 +487,9 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                 $archivesect[$key]['date'] = $expiredate['y'].zerofill($expiredate['m'],2).zerofill($expiredate['d'],2);
                         }
                         // Sort by date BEGIN
-                        $archivedsect_date=[];
+                        $archivedsect_date =[];
                         foreach ($archivedsect as $value2) {
-                                $archivedsect_date[]=$value2['date'];
+                                $archivedsect_date[] =$value2['date'];
                         }
                         array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
                         // Sort by date END
@@ -516,7 +516,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                                 foreach ($archivesect as $key2 => $value2)
                                                 {
                                                         if ($archivesect[$key2]['date'] == $datefoo) {
-                                                                $enddate=0;
+                                                                $enddate =0;
 
                                                         } elseif ($archivesect[$key2]['date'] > $datefoo) {
                                                                 if ($enddate) { // si la section n'existe pas encore
@@ -525,7 +525,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                                                         $archivepage = str_replace ($archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $token."\n".$archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $archivepage);
                                                                 }
 
-                                                                $enddate=0;
+                                                                $enddate =0;
                                                                 break;
                                                         }
                                                 }
@@ -545,9 +545,9 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                                 // Add it in the array $archivesect (avoids problems if we archive two temp requests that expire the same day)
                                                 $archivesect[] = ['wikititle'=>$sect1[$key]['wikititle'], 'title'=>$sect1[$key]['title'], 'content'=>$sect1[$key]['content'], 'date'=>$datefoo];
                                                 // Sort by date BEGIN
-                                                $archivedsect_date=[];
+                                                $archivedsect_date =[];
                                                 foreach ($archivedsect as $value2) {
-                                                        $archivedsect_date[]=$value2['date'];
+                                                        $archivedsect_date[] =$value2['date'];
                                                 }
                                                 array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
                                                 // Sort by date END
