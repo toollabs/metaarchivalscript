@@ -156,14 +156,13 @@ function get_content_by_section ($texte, $lvlsect) {
 						$i++;
 				}
 				// section n
-				else
-				{
+ else {
 						$motif_2 = str_replace("[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic($listesections[($i-1)]), $motif);
 						preg_match ("#(".$motif_2.")(.*)$#sU", $texte, $matches);
 						$result[$i]['wikititle'] = $matches[1];
 						$result[$i]['title'] = $matches[2];
 						$result[$i]['content'] = $matches[3];
-				}
+	}
 		}
 
 		return $result;
@@ -398,8 +397,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 						foreach ($archivepage as $key => $value) {
 								$archivepage[$key] = str_replace($token, '', $archivepage[$key]);
 						}
-				}
-				else { echo "Warning : section $title not found.\n";
+				} else { echo "Warning : section $title not found.\n";
 				}
 		}
 
@@ -423,8 +421,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
 				echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
 				sleep(20);
-		}
-		else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+		} else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
 		}
 }
 
@@ -546,8 +543,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 								}
 						}
 
-				}
-				else { echo "Warning : section $title not found.\n";
+				} else { echo "Warning : section $title not found.\n";
 				}
 		}
 
@@ -567,8 +563,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 
 				echo $archivedrequests . " request(s) archived with success !\n\n";
 				sleep(20);
-		}
-		else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+		} else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
 		}
 }
 
@@ -681,8 +676,7 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
 
 				echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
 				sleep(20);
-		}
-		else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+		} else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
 		}
 }
 
@@ -713,8 +707,7 @@ foreach ($settings_archives as $arcpagetitle => $arcpageset)
 				}
 
 						archiveprocess ($arcpagetitle, $arcpageset['subpage'], $arcpageset['subsections'], $arcpageset['nbdays'], $arcpageset['match'], $arcpageset['lvlsect']);
-		}
-		else { exit('Error : please check settings definition.');
+		} else { exit('Error : please check settings definition.');
 		}
 }
 

@@ -153,8 +153,7 @@ foreach($array_feed as $pn => $text)
 		if( !($es->get_exists()) )
 		{
 				$site->initPage( $pn )->edit( $text, $reason );
-		}
-		else { echo "Skipping [[$pn]] (already created)\n";
+		} else { echo "Skipping [[$pn]] (already created)\n";
 		}
 }
 
