@@ -3,10 +3,10 @@
 /*   ---------------------------------------------
 
 Author : Quentinv57 (2011 - 2014)
-         Steinsplitter (2014 - )
+		 Steinsplitter (2014 - )
 
 Licence : GNU General Public License v3
-                        (see http://www.gnu.org/licenses/)
+						(see http://www.gnu.org/licenses/)
 
 Date of creation : 2011-04
 
@@ -16,14 +16,14 @@ Meta Archival Script - creates all archive pages
 
 function createpage ($pn, $text) {
 # fct intermédiaire pour rendre le code plus lisible
-        global $site;
-        $reason = 'init archive';
+		global $site;
+		$reason = 'init archive';
 
-        echo "Creating [[$pn]]";
-        $site->initPage( $pn )->edit( $text, $reason );
+		echo "Creating [[$pn]]";
+		$site->initPage( $pn )->edit( $text, $reason );
 
-        echo "...\n";
-        sleep(5);
+		echo "...\n";
+		sleep(5);
 }
 
 //Dependency: https://github.com/MW-Peachy/Peachy
@@ -145,17 +145,17 @@ if (date('m')!=12) {      $sfx = date('Y') . '-' . str_pad((date('m')+1), 2, 0, 
 
 foreach($array_feed as $pn => $text)
 {
-        global $site;
-        $pn .= $sfx ;
-        $esum = "" ;
+		global $site;
+		$pn .= $sfx ;
+		$esum = "" ;
 
-        $es = $site->initPage( $pn );
-        if( !($es->get_exists()) )
-        {
-                $site->initPage( $pn )->edit( $text, $reason );
-        }
-        else { echo "Skipping [[$pn]] (already created)\n";
-        }
+		$es = $site->initPage( $pn );
+		if( !($es->get_exists()) )
+		{
+				$site->initPage( $pn )->edit( $text, $reason );
+		}
+		else { echo "Skipping [[$pn]] (already created)\n";
+		}
 }
 
 ?>

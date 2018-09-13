@@ -5,7 +5,6 @@
 		<exclude name="Generic.Files.ByteOrderMark.Found" />
 		<exclude name="Generic.Files.LineLength.TooLong" />
 		<exclude name="Generic.PHP.CharacterBeforePHPOpeningTag.Found" />
-		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPublic" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.WrongStyle" />
 		<exclude name="MediaWiki.ControlStructures.IfElseStructure.SpaceAfterElse" />
