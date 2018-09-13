@@ -220,7 +220,7 @@ function get_last_date ($text) {
                 if ($lastdate==[]) {
                         $lastdate = ['d'=>$d, 'm'=>$m, 'y'=>$y];
                 } else {
-                        if ($y>$lastdate['y'] OR ($y==$lastdate['y'] AND $m>$lastdate['m']) OR ($y==$lastdate['y'] AND $m==$lastdate['m'] AND $d>$lastdate['d'])) {
+                        if ($y>$lastdate['y'] or ($y==$lastdate['y'] and $m>$lastdate['m']) or ($y==$lastdate['y'] and $m==$lastdate['m'] and $d>$lastdate['d'])) {
                                 $lastdate = ['d'=>$d, 'm'=>$m, 'y'=>$y];
                         }
                 }
@@ -247,8 +247,8 @@ function is_last_x_days ($date, $nbdays) {
         $time = mktime (0, 0, 1, $date['m'], $date['d'], $date['y']);
         $time += $nbdays * 3600 * 24;
 
-        if ($time<=time()) {      return TRUE;
-        } else {                            return FALSE;
+        if ($time<=time()) {      return true;
+        } else {                            return false;
         }
 }
 
@@ -291,7 +291,7 @@ function zerofill ($num, $length) {
         $lvlsect (facultatif) est le niveau des sections données dans $subsections
 */
 
-function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2) {
+function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=null, $lvlsect=2) {
 
         global $site;
         echo "Working on [[$contentpagename]]...\n";
@@ -311,13 +311,13 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
         foreach ($subsections as $nsub => $title)
         {
-                $id = NULL;
+                $id = null;
                 foreach ($sub as $key2=>$temp) {
                         if ($sub[$key2]['title']==$title) { $id = $key2;
                         }
                 }
 
-                if ($id != NULL)
+                if ($id != null)
                 {
                         echo "-> ".$sub[$id]['title']."\n";
 
@@ -348,11 +348,11 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
                         foreach ($sect1 as $key => $value)
                         {
-                                if ((empty($matchregx) OR preg_match($matchregx, $sect1[$key]['content'])) AND !preg_match('#'.preg_quote_magic(DONTARCHIVESECT).'#i', $sect1[$key]['content']))
+                                if ((empty($matchregx) or preg_match($matchregx, $sect1[$key]['content'])) and !preg_match('#'.preg_quote_magic(DONTARCHIVESECT).'#i', $sect1[$key]['content']))
                                 { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
                                         $lastdate = get_last_date($sect1[$key]['content']);
 
-                                        if (!empty($lastdate) AND is_last_x_days($lastdate, $nbdaysexec))
+                                        if (!empty($lastdate) and is_last_x_days($lastdate, $nbdaysexec))
                                         {
                                                 $lastdate_formated = $lastdate['y'].'-'.str_pad($lastdate['m'], 2, 0, STR_PAD_LEFT);
 
@@ -433,7 +433,7 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 ************************ Extension temp_sysop  ****************************
 ************************************************************************ */
 
-function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=NULL, $lvlsect=2) {
+function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=null, $lvlsect=2) {
         global $site;
         echo "Working on [[$contentpagename]] (temp sysop requests) ...\n";
 
@@ -453,13 +453,13 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 
         foreach ($subsections as $nsub => $title)
         {
-                $id = NULL;
+                $id = null;
                 foreach ($sub as $key2=>$temp) {
                         if ($sub[$key2]['title']==$title) { $id = $key2;
                         }
                 }
 
-                if ($id != NULL)
+                if ($id != null)
                 {
                         echo "-> ".$sub[$id]['title']."\n";
 
@@ -487,11 +487,11 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 
                         foreach ($sect1 as $key => $value)
                         {
-                                if ((empty($matchregx) OR preg_match($matchregx, $sect1[$key]['content'], $matches)) AND !preg_match('#'.preg_quote_magic(DONTARCHIVESECT).'#i', $sect1[$key]['content']))
+                                if ((empty($matchregx) or preg_match($matchregx, $sect1[$key]['content'], $matches)) and !preg_match('#'.preg_quote_magic(DONTARCHIVESECT).'#i', $sect1[$key]['content']))
                                 { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
                                         $lastdate = get_last_date($sect1[$key]['content']);
 
-                                        if (!empty($lastdate) AND is_last_x_days($lastdate, $nbdaysexec))
+                                        if (!empty($lastdate) and is_last_x_days($lastdate, $nbdaysexec))
                                         {
                                                 // get template data :
                                                 $template_data['delay'] = $matches[1];
@@ -577,7 +577,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 ************************ Extension approved_temp  ****************************
 ************************************************************************ */
 
-function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archive_subsection, $nbdaysexec, $matchregx=NULL, $lvlsect=2) {
+function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archive_subsection, $nbdaysexec, $matchregx=null, $lvlsect=2) {
         global $site;
 
         echo "Working on [[$contentpagename]]...\n";
@@ -603,11 +603,11 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
 
                 foreach ($sect1 as $key => $value)
                 {
-                        if ((empty($matchregx) OR preg_match($matchregx, $sect1[$key]['content'])) AND !preg_match('#'.preg_quote_magic(DONTARCHIVESECT).'#i', $sect1[$key]['content']))
+                        if ((empty($matchregx) or preg_match($matchregx, $sect1[$key]['content'])) and !preg_match('#'.preg_quote_magic(DONTARCHIVESECT).'#i', $sect1[$key]['content']))
                                 { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
                                 $lastdate = get_last_date($sect1[$key]['content']);
 
-                                if (!empty($lastdate) AND is_last_x_days($lastdate, $nbdaysexec))
+                                if (!empty($lastdate) and is_last_x_days($lastdate, $nbdaysexec))
                                 {
                                         $lastdate_formated = $lastdate['y'].'-'.str_pad($lastdate['m'], 2, 0, STR_PAD_LEFT);
 
