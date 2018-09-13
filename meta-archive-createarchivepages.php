@@ -27,7 +27,7 @@ function createpage( $pn, $text ) {
 }
 
 // Dependency: https://github.com/MW-Peachy/Peachy
-require '/data/project/sbot/Peachy/Peachy/Init.php' ;
+require '/data/project/sbot/Peachy/Peachy/Init.php';
 
 $site = Peachy::newWiki( "meta" );
 $site->set_runpage( null );
@@ -139,14 +139,14 @@ $array_feed = [
 "
 ];
 
-if ( date( 'm' )!=12 ) {      $sfx = date( 'Y' ) . '-' . str_pad( ( date( 'm' )+1 ), 2, 0, STR_PAD_LEFT ) ;
-} else {                            $sfx = ( date( 'Y' )+1 ) . '-' . '01';
+if ( date( 'm' ) != 12 ) {      $sfx = date( 'Y' ) . '-' . str_pad( ( date( 'm' ) + 1 ), 2, 0, STR_PAD_LEFT );
+} else {                            $sfx = ( date( 'Y' ) + 1 ) . '-' . '01';
 }
 
 foreach ( $array_feed as $pn => $text ) {
 		global $site;
-		$pn .= $sfx ;
-		$esum = "" ;
+		$pn .= $sfx;
+		$esum = "";
 
 		$es = $site->initPage( $pn );
 		if ( !( $es->get_exists() ) ) {

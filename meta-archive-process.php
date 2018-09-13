@@ -98,7 +98,7 @@ $settings_archives_approvedtemp = [ 'page' => 'Steward requests/Permissions/Appr
 define( 'DONTARCHIVESECT', '{{User:SteinsplitterBot/DoNotArchiveSect}}' );
 
 // Dependency: https://github.com/MW-Peachy/Peachy
-require '/data/project/sbot/Peachy/Peachy/Init.php' ;
+require '/data/project/sbot/Peachy/Peachy/Init.php';
 
 $site = Peachy::newWiki( "meta" );
 $site->set_runpage( null );
@@ -116,14 +116,14 @@ function get_content_by_section( $texte, $lvlsect ) {
 		$result = [];
 
 		$motif = '';
-		for ( $i=1; $i<=$lvlsect; $i++ ) {
+		for ( $i = 1; $i <= $lvlsect; $i++ ) {
 				$motif .= "=";
 		}
-		$motif = $motif . " *([^=^ ][^=^\n]*[^=^ ]) *" . $motif . "[^=]" ;
+		$motif = $motif . " *([^=^ ][^=^\n]*[^=^ ]) *" . $motif . "[^=]";
 
 		// si la sous-section n'apparait pas, on renvoie le texte
 		if ( !preg_match( '#'.$motif.'#', $texte ) ) {
-				return [ 'error'=>'NOTFOUND', 'content'=>$texte ];
+				return [ 'error' => 'NOTFOUND', 'content' => $texte ];
 		}
 
 		// liste des sections
@@ -136,11 +136,11 @@ function get_content_by_section( $texte, $lvlsect ) {
 		$result[0]['title'] = '';
 		$result[0]['content'] = $matches[1];
 
-		$i =1;
+		$i = 1;
 		foreach ( $listesections as $key => $value ) {
 				// sections (1 à n-1)
-				if ( $i<count( $listesections ) ) {
-						$motif_1 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[( $i-1 )] ), $motif );
+				if ( $i < count( $listesections ) ) {
+						$motif_1 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[( $i - 1 )] ), $motif );
 						$motif_2 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[$i] ), $motif );
 
 						preg_match( "#(".$motif_1.")(.*)".$motif_2."#sU", $texte, $matches );
@@ -153,7 +153,7 @@ function get_content_by_section( $texte, $lvlsect ) {
 				}
 				// section n
  else {
-						$motif_2 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[( $i-1 )] ), $motif );
+						$motif_2 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[( $i - 1 )] ), $motif );
 						preg_match( "#(".$motif_2.")(.*)$#sU", $texte, $matches );
 						$result[$i]['wikititle'] = $matches[1];
 						$result[$i]['title'] = $matches[2];
@@ -166,37 +166,63 @@ function get_content_by_section( $texte, $lvlsect ) {
 
 function NumberMonth( $foo ) {
 		switch ( $foo ) {
-				case 'January':         return 1;
-				case 'February':        return 2;
-				case 'March':           return 3;
-				case 'April':           return 4;
-				case 'May':             return 5;
-				case 'June':            return 6;
-				case 'July':            return 7;
-				case 'August':          return 8;
-				case 'September':       return 9;
-				case 'October':         return 10;
-				case 'November':        return 11;
-				case 'December':        return 12;
-				default: return 0;
+				case 'January':
+return 1;
+				case 'February':
+return 2;
+				case 'March':
+return 3;
+				case 'April':
+return 4;
+				case 'May':
+return 5;
+				case 'June':
+return 6;
+				case 'July':
+return 7;
+				case 'August':
+return 8;
+				case 'September':
+return 9;
+				case 'October':
+return 10;
+				case 'November':
+return 11;
+				case 'December':
+return 12;
+				default:
+return 0;
 		}
 }
 
 function FooMonth( $nb ) {
 		switch ( $nb ) {
-				case 1:                         return 'January';
-				case 2:                         return 'February';
-				case 3:                         return 'March';
-				case 4:                         return 'April';
-				case 5:                         return 'May';
-				case 6:                         return 'June';
-				case 7:                         return 'July';
-				case 8:                         return 'August';
-				case 9:                         return 'September';
-				case 10:                        return 'October';
-				case 11:                        return 'November';
-				case 12:                        return 'December';
-				default: return 0;
+				case 1:
+return 'January';
+				case 2:
+return 'February';
+				case 3:
+return 'March';
+				case 4:
+return 'April';
+				case 5:
+return 'May';
+				case 6:
+return 'June';
+				case 7:
+return 'July';
+				case 8:
+return 'August';
+				case 9:
+return 'September';
+				case 10:
+return 'October';
+				case 11:
+return 'November';
+				case 12:
+return 'December';
+				default:
+return 0;
 		}
 }
 
@@ -210,11 +236,11 @@ function get_last_date( $text ) {
 				$m = NumberMonth( $matches[2][$key] );
 				$y = intval( $matches[3][$key] );
 
-				if ( $lastdate==[] ) {
-						$lastdate = [ 'd'=>$d, 'm'=>$m, 'y'=>$y ];
+				if ( $lastdate == [] ) {
+						$lastdate = [ 'd' => $d, 'm' => $m, 'y' => $y ];
 				} else {
-						if ( $y>$lastdate['y'] or ( $y==$lastdate['y'] and $m>$lastdate['m'] ) or ( $y==$lastdate['y'] and $m==$lastdate['m'] and $d>$lastdate['d'] ) ) {
-								$lastdate = [ 'd'=>$d, 'm'=>$m, 'y'=>$y ];
+						if ( $y > $lastdate['y'] or ( $y == $lastdate['y'] and $m > $lastdate['m'] ) or ( $y == $lastdate['y'] and $m == $lastdate['m'] and $d > $lastdate['d'] ) ) {
+								$lastdate = [ 'd' => $d, 'm' => $m, 'y' => $y ];
 						}
 				}
 		}
@@ -230,7 +256,7 @@ function get_expiring_date( $sectiontext ) {
 		$m = NumberMonth( $matches[2] );
 		$y = intval( $matches[3] );
 
-		$lastdate = [ 'd'=>$d, 'm'=>$m, 'y'=>$y ];
+		$lastdate = [ 'd' => $d, 'm' => $m, 'y' => $y ];
 
 		return $lastdate;
 }
@@ -240,21 +266,21 @@ function is_last_x_days( $date, $nbdays ) {
 		$time = mktime( 0, 0, 1, $date['m'], $date['d'], $date['y'] );
 		$time += $nbdays * 3600 * 24;
 
-		if ( $time<=time() ) {      return true;
+		if ( $time <= time() ) {      return true;
 		} else {                            return false;
 		}
 }
 
 function lastmonth() {
-		if ( date( 'm' )!=1 ) {       return date( 'Y' ) . '-' . str_pad( ( date( 'm' )-1 ), 2, 0, STR_PAD_LEFT ) ;
-		} else {                            return ( date( 'Y' )-1 ) . '-' . '12';
+		if ( date( 'm' ) != 1 ) {       return date( 'Y' ) . '-' . str_pad( ( date( 'm' ) - 1 ), 2, 0, STR_PAD_LEFT );
+		} else {                            return ( date( 'Y' ) - 1 ) . '-' . '12';
 		}
 }
 
 function numtoken( $length ) {
    $result = '';
 
-   for ( $i=0; $i<=$length; $i++ ) {
+   for ( $i = 0; $i <= $length; $i++ ) {
 	  $result .= rand( 0, 9 );
    }
 
@@ -264,7 +290,7 @@ function numtoken( $length ) {
 function zerofill( $num, $length ) {
 		$result = $num;
 
-		for ( $i=0; $i<( $length-strlen( $num ) ); $i++ ) {
+		for ( $i = 0; $i < ( $length - strlen( $num ) ); $i++ ) {
 				$result = '0'.$result;
 		}
 
@@ -291,11 +317,11 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 		$contentpage = $site->initPage( $contentpagename )->get_text( $force = true );
 		$difflen = strlen( $contentpage );
 		$archivepage = [];
-		$archivedrequests = [ 'total'=>0 ];
+		$archivedrequests = [ 'total' => 0 ];
 
 		// Pour monter jusqu'au niveau de section $lvlsect, s'il est strict. supérieur à deux, on prend seulement le contenu de la première section de titre niveau 2, etc.
-		for ( $i=2; $i<=$lvlsect; $i++ ) {
-				if ( $i==2 ) { $sub = get_content_by_section( $contentpage, 2 );
+		for ( $i = 2; $i <= $lvlsect; $i++ ) {
+				if ( $i == 2 ) { $sub = get_content_by_section( $contentpage, 2 );
 				} else { $sub = get_content_by_section( $sub[1]['content'], $i );
 				}
 		}
@@ -303,8 +329,8 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 
 		foreach ( $subsections as $nsub => $title ) {
 				$id = null;
-				foreach ( $sub as $key2=>$temp ) {
-						if ( $sub[$key2]['title']==$title ) { $id = $key2;
+				foreach ( $sub as $key2 => $temp ) {
+						if ( $sub[$key2]['title'] == $title ) { $id = $key2;
 						}
 				}
 
@@ -332,7 +358,7 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 								## INIT ARCHIVE PAGE WITH TOKEN - End
 						}
 
-						$sect1 = get_content_by_section( $sub[$id]['content'], ( $lvlsect+1 ) );
+						$sect1 = get_content_by_section( $sub[$id]['content'], ( $lvlsect + 1 ) );
 						unset( $sect1[0] );
 
 						foreach ( $sect1 as $key => $value ) {
@@ -394,13 +420,13 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 
 		// Substitution de la page
 		$difflen -= strlen( $contentpage ); // diff de longueur (en bytes) de la page
-		if ( $archivedrequests['total']>2 || ( $difflen>4000 ) ) { // on n'archive que si on a au moins deux requêtes (ou si la page perd plus de 5000 bytes)
-				$archivesummary = ( $archivedrequests['total']>1 ) ? $archivedrequests['total'] . " requests archived" : "1 request archived";
+		if ( $archivedrequests['total'] > 2 || ( $difflen > 4000 ) ) { // on n'archive que si on a au moins deux requêtes (ou si la page perd plus de 5000 bytes)
+				$archivesummary = ( $archivedrequests['total'] > 1 ) ? $archivedrequests['total'] . " requests archived" : "1 request archived";
 				$site->initPage( $contentpagename )->edit( $contentpage, $archivesummary );
 
 				foreach ( $archivepage as $key => $value ) {
 						sleep( 5 );
-						$archivesummary = ( $archivedrequests[$key]>1 ) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
+						$archivesummary = ( $archivedrequests[$key] > 1 ) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
 						$site->initPage( $archivepagename.$key )->edit( $value, $archivesummary );
 				}
 
@@ -424,8 +450,8 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 		$archivedrequests = 0;
 
 		// Pour monter jusqu'au niveau de section $lvlsect, s'il est strict. supérieur à deux, on prend seulement le contenu de la première section de titre niveau 2, etc.
-		for ( $i=2; $i<=$lvlsect; $i++ ) {
-				if ( $i==2 ) { $sub = get_content_by_section( $contentpage, 2 );
+		for ( $i = 2; $i <= $lvlsect; $i++ ) {
+				if ( $i == 2 ) { $sub = get_content_by_section( $contentpage, 2 );
 				} else { $sub = get_content_by_section( $sub[1]['content'], $i );
 				}
 		}
@@ -433,8 +459,8 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 
 		foreach ( $subsections as $nsub => $title ) {
 				$id = null;
-				foreach ( $sub as $key2=>$temp ) {
-						if ( $sub[$key2]['title']==$title ) { $id = $key2;
+				foreach ( $sub as $key2 => $temp ) {
+						if ( $sub[$key2]['title'] == $title ) { $id = $key2;
 						}
 				}
 
@@ -446,7 +472,7 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 
 						// No need to archive page with tooken - especially because this page does not have the same format
 
-						$sect1 = get_content_by_section( $sub[$id]['content'], ( $lvlsect+1 ) );
+						$sect1 = get_content_by_section( $sub[$id]['content'], ( $lvlsect + 1 ) );
 						unset( $sect1[0] );
 
 						$archivesect = get_content_by_section( $archivepage, 2 );
@@ -455,9 +481,9 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 								$archivesect[$key]['date'] = $expiredate['y'].zerofill( $expiredate['m'], 2 ).zerofill( $expiredate['d'], 2 );
 						}
 						// Sort by date BEGIN
-						$archivedsect_date =[];
+						$archivedsect_date = [];
 						foreach ( $archivedsect as $value2 ) {
-								$archivedsect_date[] =$value2['date'];
+								$archivedsect_date[] = $value2['date'];
 						}
 						array_multisort( $archivedsect_date, SORT_NUMERIC, $archivedsect );
 						// Sort by date END
@@ -480,7 +506,7 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 
 												foreach ( $archivesect as $key2 => $value2 ) {
 														if ( $archivesect[$key2]['date'] == $datefoo ) {
-																$enddate =0;
+																$enddate = 0;
 
 														} elseif ( $archivesect[$key2]['date'] > $datefoo ) {
 																if ( $enddate ) { // si la section n'existe pas encore
@@ -489,7 +515,7 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 																		$archivepage = str_replace( $archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $token."\n".$archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $archivepage );
 																}
 
-																$enddate =0;
+																$enddate = 0;
 																break;
 														}
 												}
@@ -505,11 +531,11 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 												echo "->".$sect1[$key]['title']."\n";
 
 												// Add it in the array $archivesect (avoids problems if we archive two temp requests that expire the same day)
-												$archivesect[] = [ 'wikititle'=>$sect1[$key]['wikititle'], 'title'=>$sect1[$key]['title'], 'content'=>$sect1[$key]['content'], 'date'=>$datefoo ];
+												$archivesect[] = [ 'wikititle' => $sect1[$key]['wikititle'], 'title' => $sect1[$key]['title'], 'content' => $sect1[$key]['content'], 'date' => $datefoo ];
 												// Sort by date BEGIN
-												$archivedsect_date =[];
+												$archivedsect_date = [];
 												foreach ( $archivedsect as $value2 ) {
-														$archivedsect_date[] =$value2['date'];
+														$archivedsect_date[] = $value2['date'];
 												}
 												array_multisort( $archivedsect_date, SORT_NUMERIC, $archivedsect );
 												// Sort by date END
@@ -526,12 +552,12 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 
 		// Substitution de la page
 		$difflen -= strlen( $contentpage ); // diff de longueur (en bytes) de la page
-		if ( $archivedrequests>0 ) { // pas de condition d'archivage pour les temp requests
-				$archivesummary = ( $archivedrequests>1 ) ? $archivedrequests . " requests moved to [[Steward requests/Permissions/Approved temporary]]" : "1 request moved to [[Steward requests/Permissions/Approved temporary]]";
+		if ( $archivedrequests > 0 ) { // pas de condition d'archivage pour les temp requests
+				$archivesummary = ( $archivedrequests > 1 ) ? $archivedrequests . " requests moved to [[Steward requests/Permissions/Approved temporary]]" : "1 request moved to [[Steward requests/Permissions/Approved temporary]]";
 				$site->initPage( $contentpagename )->edit( $contentpage, $archivesummary );
 
 				sleep( 5 );
-				$archivesummary = ( $archivedrequests>1 ) ? $archivedrequests . " temp sysop requests archived" : "1 temp sysop request archived";
+				$archivesummary = ( $archivedrequests > 1 ) ? $archivedrequests . " temp sysop requests archived" : "1 temp sysop request archived";
 				$site->initPage( $archivepagename )->edit( $archivepage, $archivesummary );
 
 				echo $archivedrequests . " request(s) archived with success !\n\n";
@@ -552,7 +578,7 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 		$contentpage = $site->initPage( $contentpagename )->get_text( $force = true );
 		$difflen = strlen( $contentpage );
 		$archivepage = [];
-		$archivedrequests = [ 'total'=>0 ];
+		$archivedrequests = [ 'total' => 0 ];
 
 		$token = numtoken( 100 );
 		$motif = "== *([^=^ ][^=^\n]*[^=^ ]) *==( *\n|$)"; // + "^\n", + " *" (2 lines), changing place of "\n" on $actumotif - " *\n" replaced by "( *\n|$)"
@@ -562,7 +588,7 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 		unset( $expiredates[0] );
 
 		foreach ( $expiredates as $ndate => $contentdate ) {
-				$sect1 = get_content_by_section( $expiredates[$ndate]['content'], ( $lvlsect+1 ) );
+				$sect1 = get_content_by_section( $expiredates[$ndate]['content'], ( $lvlsect + 1 ) );
 				unset( $expiredates[0] );
 
 				$nbarchivedinsect1 = 0; // nb de requêtes archivées dans la section sect1
@@ -605,7 +631,7 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 										$nbarchivedinsect1++;
 										$contentpage = str_replace( $sect1[$key]['wikititle'].$sect1[$key]['content'], '', $contentpage );
 												// important : retirer le titre niveau 2 (date d'expiration) si c'est la seule / la dernière requête archivée pour ce jour
-												if ( ( count( $sect1 )-1 )==$nbarchivedinsect1 ) {
+												if ( ( count( $sect1 ) - 1 ) == $nbarchivedinsect1 ) {
 														$contentpage = str_replace( $expiredates[$ndate]['wikititle'], '', $contentpage );
 												}
 
@@ -628,13 +654,13 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 
 		// Substitution de la page
 		$difflen -= strlen( $contentpage ); // diff de longueur (en bytes) de la page
-		if ( $archivedrequests['total']>2 || ( $difflen>4000 ) ) { // on n'archive que si on a au moins deux requêtes (ou si la page perd plus de 5000 bytes)
-				$archivesummary = ( $archivedrequests['total']>1 ) ? $archivedrequests['total'] . " requests archived" : "1 request archived";
+		if ( $archivedrequests['total'] > 2 || ( $difflen > 4000 ) ) { // on n'archive que si on a au moins deux requêtes (ou si la page perd plus de 5000 bytes)
+				$archivesummary = ( $archivedrequests['total'] > 1 ) ? $archivedrequests['total'] . " requests archived" : "1 request archived";
 				$site->initPage( $contentpagename )->edit( $contentpage, $archivesummary );
 
 				foreach ( $archivepage as $key => $value ) {
 						sleep( 5 );
-						$archivesummary = ( $archivedrequests[$key]>1 ) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
+						$archivesummary = ( $archivedrequests[$key] > 1 ) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
 						$site->initPage( $archivepagename.$key )->edit( $value, $archivesummary );
 				}
 
@@ -657,8 +683,8 @@ foreach ( $settings_archives as $arcpagetitle => $arcpageset ) {
 				$arcpageset['match'] = ( empty( $arcpageset['match'] ) ) ? 2 : $arcpageset['match'];
 				$arcpageset['lvlsect'] = ( empty( $arcpageset['lvlsect'] ) ) ? 2 : $arcpageset['lvlsect'];
 
-				if ( $arcpageset['nbdays']>0 ) {
-						if ( $arcpagetitle==$settings_archives_tempsysop['page'] ) {
+				if ( $arcpageset['nbdays'] > 0 ) {
+						if ( $arcpagetitle == $settings_archives_tempsysop['page'] ) {
 								// archives temp sysop requests first
 								archiveprocess_tempsysop( $settings_archives_tempsysop['page'], $settings_archives_tempsysop['page'].'/'.$settings_archives_tempsysop['suffix'], $settings_archives_tempsysop['subsections'], $arcpageset['nbdays'], $settings_archives_tempsysop['match'], $arcpageset['lvlsect'] );
 								archiveprocess_approvedtemp( $settings_archives_approvedtemp['page'], $settings_archives_approvedtemp['arc_subpage'], $settings_archives_approvedtemp['arc_subsection'], $settings_archives_approvedtemp['nbdays'], $settings_archives_approvedtemp['match'], $arcpageset['lvlsect'] );
