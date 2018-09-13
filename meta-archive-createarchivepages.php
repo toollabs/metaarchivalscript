@@ -27,7 +27,7 @@ function createpage ($pn, $text) {
 }
 
 //Dependency: https://github.com/MW-Peachy/Peachy
-require( '/data/project/sbot/Peachy/Peachy/Init.php' );
+require '/data/project/sbot/Peachy/Peachy/Init.php' ;
 
 $site = Peachy::newWiki( "meta" );
 $site->set_runpage( null );
