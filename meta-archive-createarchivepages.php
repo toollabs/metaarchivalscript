@@ -33,7 +33,7 @@ require( '/data/project/sbot/Peachy/Peachy/Init.php' );
 $site = Peachy::newWiki( "meta" );
 $site->set_runpage( null );
 
-$array_feed = array(
+$array_feed = [
 'Talk:Spam blacklist/Archives/' => "{{Archive header}}
 
 == Proposed additions ==
@@ -138,7 +138,7 @@ $array_feed = array(
 
 == Requests involving merges, usurps or other complications ==
 "
-);
+];
 
 if (date('m')!=12)      $sfx = date('Y') . '-' . str_pad((date('m')+1), 2, 0, STR_PAD_LEFT) ;
 else                            $sfx = (date('Y')+1) . '-' . '01';

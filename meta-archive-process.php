@@ -33,68 +33,68 @@ Here are the settings
 
 */
 
-$settings_match = array (       'status_template'       => '#\{\{status\|((not |not)?done|cannot|withdrawn|local)+(|\|.*)\}\}#i',
+$settings_match = [       'status_template'       => '#\{\{status\|((not |not)?done|cannot|withdrawn|local)+(|\|.*)\}\}#i',
                                                         'status_param'          => '#(\| *status *= *(<!--.*-->)?((not |not)?done|cannot|withdrawn|local)|\{\{status\|((not |not)?done|cannot|withdrawn|local)\}\})#iU',
                                                         // 20111009 : replace '#\| *status *= *(<!--.*-->)?(not |not)?done#iU' by '#(\| *status *= *(<!--.*-->)?(not |not)?done|\{\{status\|(not |not)?done\}\})#iU' > enable the use of the status template everywhere
                                                         'sb_templates'          => '#\{\{(added|declined|cannot|removed|(not |not)?done|closing)\}\}#i',
                                                         'sc_templates'          => '#\| *status *= *(<!--.*-->)?(not |not)?done|cannot|withdrawn|local#iU',
                                                         'tempsysop'                     => '#\{\{TempSysop\|([0-9]+)\|([0-9]{4,})\|([0-9]+)\|([0-9]+)(\||\}\})#i',
                                                         'st_templates'          => '#\{\{status\|(added|declined|removed|(not |not)?done|closing|cannot|local)\}\}#i',
-                                                        'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'|\{\{removed\}\}|\{\{extended\}\}#i'       );
+                                                        'removetemp'            => '#\'\'\'removed\'\'\'|\'\'\'extended\'\'\'|\{\{removed\}\}|\{\{extended\}\}#i'       ];
 
-$settings_archives = array (
-        'Talk:Spam blacklist' => array( 'subpage' => 'Talk:Spam blacklist/Archives/',
+$settings_archives = [
+        'Talk:Spam blacklist' => [ 'subpage' => 'Talk:Spam blacklist/Archives/',
                                                                         'nbdays' => 3,
-                                                                        'subsections' => array('Proposed additions','Proposed removals'),
-                                                                        'match' => $settings_match['sb_templates']),
+                                                                        'subsections' => ['Proposed additions','Proposed removals'],
+                                                                        'match' => $settings_match['sb_templates']],
 
-        'Steward requests/Checkuser' => array(  'subpage' => 'Steward requests/Checkuser/',
+        'Steward requests/Checkuser' => [  'subpage' => 'Steward requests/Checkuser/',
                                                                                         'nbdays' => 4, // was 7 before
-                                                                                        'subsections' => array('Requests'),
-                                                                                        'match' => $settings_match['status_param']), // #\{\{status\|(not )?done\}\}#
+                                                                                        'subsections' => ['Requests'],
+                                                                                        'match' => $settings_match['status_param']], // #\{\{status\|(not )?done\}\}#
 
-        'Steward requests/Global' => array(     'subpage' => 'Steward requests/Global/',
+        'Steward requests/Global' => [     'subpage' => 'Steward requests/Global/',
                                                                                 'nbdays' => 2, // previously 3
-                                                                                'subsections' => array('Requests for global (un)block','Requests for global (un)lock and (un)hiding'),
-                                                                                'match' => $settings_match['status_template']),
+                                                                                'subsections' => ['Requests for global (un)block','Requests for global (un)lock and (un)hiding'],
+                                                                                'match' => $settings_match['status_template']],
 
-        'Steward requests/Global permissions' => array( 'subpage' => 'Steward requests/Global permissions/',
+        'Steward requests/Global permissions' => [ 'subpage' => 'Steward requests/Global permissions/',
                                                                                                         'nbdays' => 2,
-                                                                                                        'subsections' => array('Requests for global IP block exemption','Requests for global rename permissions','Requests for other global permissions'),
-                                                                                                        'match' => $settings_match['status_param']),
+                                                                                                        'subsections' => ['Requests for global IP block exemption','Requests for global rename permissions','Requests for other global permissions'],
+                                                                                                        'match' => $settings_match['status_param']],
 
-        'Steward requests/Bot status' => array( 'subpage' => 'Steward requests/Bot status/',
+        'Steward requests/Bot status' => [ 'subpage' => 'Steward requests/Bot status/',
                                                                                         'nbdays' => 2, // previously 3
-                                                                                        'subsections' => array('Global bot status requests','Removal of global bot status','Bot status requests','Removal of bot status'),
-                                                                                        'match' => $settings_match['status_param']),
+                                                                                        'subsections' => ['Global bot status requests','Removal of global bot status','Bot status requests','Removal of bot status'],
+                                                                                        'match' => $settings_match['status_param']],
 
-        'Steward requests/Permissions' => array(        'subpage' => 'Steward requests/Permissions/',
+        'Steward requests/Permissions' => [        'subpage' => 'Steward requests/Permissions/',
                                                                                                 'nbdays' => 2,
-                                                                                                'subsections' => array('Administrator access','Bureaucrat access','CheckUser access','Oversight access','Removal of access','Miscellaneous requests'),
+                                                                                                'subsections' => ['Administrator access','Bureaucrat access','CheckUser access','Oversight access','Removal of access','Miscellaneous requests'],
                                                                                                 'match' => $settings_match['status_param'],
-                                                                                                'lvlsect' => 3),
+                                                                                                'lvlsect' => 3],
 
-        'Steward requests/Miscellaneous' => array(        'subpage' => 'Steward requests/Miscellaneous/',
+        'Steward requests/Miscellaneous' => [        'subpage' => 'Steward requests/Miscellaneous/',
                                                                                                 'nbdays' => 2,
-                                                                                                'subsections' => array('Manual requests'),
-                                                                                                'match' => $settings_match['status_param']),
+                                                                                                'subsections' => ['Manual requests'],
+                                                                                                'match' => $settings_match['status_param']],
 
-        'Steward requests/Username changes' => array(   'subpage' => 'Steward requests/Username changes/',
+        'Steward requests/Username changes' => [   'subpage' => 'Steward requests/Username changes/',
                                                                                                         'nbdays' => 2, // previously 3
-                                                                                                        'subsections' => array('Simple rename requests','Requests involving merges, usurps or other complications'),
-                                                                                                        'match' => $settings_match['status_param'])
-        );
+                                                                                                        'subsections' => ['Simple rename requests','Requests involving merges, usurps or other complications'],
+                                                                                                        'match' => $settings_match['status_param']]
+        ];
 
-$settings_archives_tempsysop = array (  'page' => 'Steward requests/Permissions',
+$settings_archives_tempsysop = [  'page' => 'Steward requests/Permissions',
                                                                                 'suffix' => 'Approved temporary',
-                                                                                'subsections' => array('Administrator access'),
-                                                                                'match' => $settings_match['tempsysop'] ); // temp sysop rights archival
+                                                                                'subsections' => ['Administrator access'],
+                                                                                'match' => $settings_match['tempsysop'] ]; // temp sysop rights archival
 
-$settings_archives_approvedtemp = array (       'page' => 'Steward requests/Permissions/Approved temporary',
+$settings_archives_approvedtemp = [       'page' => 'Steward requests/Permissions/Approved temporary',
                                                                                         'arc_subpage' => 'Steward requests/Permissions/',
                                                                                         'arc_subsection' => 'Temporary permissions (expired and rejected requests only)',
                                                                                         'nbdays' => 0,
-                                                                                        'match' => $settings_match['removetemp'] ); // archive requests on [[Steward requests/Permissions/Approved temporary]]
+                                                                                        'match' => $settings_match['removetemp'] ]; // archive requests on [[Steward requests/Permissions/Approved temporary]]
 define ('DONTARCHIVESECT','{{User:SteinsplitterBot/DoNotArchiveSect}}');
 
 
@@ -117,7 +117,7 @@ function preg_quote_magic ($foo)
 
 function get_content_by_section ($texte, $lvlsect)
 {
-        $result = array();
+        $result = [];
 
         $motif = '';
         for ($i=1; $i<=$lvlsect; $i++)
@@ -126,7 +126,7 @@ function get_content_by_section ($texte, $lvlsect)
 
         // si la sous-section n'apparait pas, on renvoie le texte
         if (!preg_match('#'.$motif.'#', $texte))
-                return array('error'=>'NOTFOUND', 'content'=>$texte);
+                return ['error'=>'NOTFOUND', 'content'=>$texte];
 
         // liste des sections
         preg_match_all ("#".$motif."#U", $texte, $listesections);
@@ -212,18 +212,18 @@ function FooMonth ($nb)
 function get_last_date ($text)
 { // retourne la dernière date trouvée dans le texte
         $date = preg_match_all("#([1-9]|[1-2][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) ([0-9]{4}) \(UTC\)#i", $text, $matches);
-        $lastdate = array();
+        $lastdate = [];
 
         foreach ($matches[0] as $key => $value) {
                 $d = intval($matches[1][$key]);
                 $m = NumberMonth($matches[2][$key]);
                 $y = intval($matches[3][$key]);
 
-                if ($lastdate==array()) {
-                        $lastdate = array('d'=>$d, 'm'=>$m, 'y'=>$y);
+                if ($lastdate==[]) {
+                        $lastdate = ['d'=>$d, 'm'=>$m, 'y'=>$y];
                 } else {
                         if ($y>$lastdate['y'] OR ($y==$lastdate['y'] AND $m>$lastdate['m']) OR ($y==$lastdate['y'] AND $m==$lastdate['m'] AND $d>$lastdate['d']))
-                                $lastdate = array('d'=>$d, 'm'=>$m, 'y'=>$y);
+                                $lastdate = ['d'=>$d, 'm'=>$m, 'y'=>$y];
                 }
         }
 
@@ -238,7 +238,7 @@ function get_expiring_date ($sectiontext)
         $m = NumberMonth($matches[2]);
         $y = intval($matches[3]);
 
-        $lastdate = array('d'=>$d, 'm'=>$m, 'y'=>$y);
+        $lastdate = ['d'=>$d, 'm'=>$m, 'y'=>$y];
 
         return $lastdate;
 }
@@ -300,8 +300,8 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
         $contentpage = $site->initPage( $contentpagename )->get_text( $force = true );
         $difflen = strlen($contentpage);
-        $archivepage = array();
-        $archivedrequests = array('total'=>0);
+        $archivepage = [];
+        $archivedrequests = ['total'=>0];
 
         // Pour monter jusqu'au niveau de section $lvlsect, s'il est strict. supérieur à deux, on prend seulement le contenu de la première section de titre niveau 2, etc.
         for ($i=2; $i<=$lvlsect; $i++) {
@@ -469,7 +469,7 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                 $archivesect[$key]['date'] = $expiredate['y'].zerofill($expiredate['m'],2).zerofill($expiredate['d'],2);
                         }
                         // Sort by date BEGIN
-                        $archivedsect_date=array();
+                        $archivedsect_date=[];
                         foreach ($archivedsect as $value2)
                                 $archivedsect_date[]=$value2['date'];
                         array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
@@ -524,9 +524,9 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                                 echo "->".$sect1[$key]['title']."\n";
 
                                                 // Add it in the array $archivesect (avoids problems if we archive two temp requests that expire the same day)
-                                                $archivesect[] = array ('wikititle'=>$sect1[$key]['wikititle'], 'title'=>$sect1[$key]['title'], 'content'=>$sect1[$key]['content'], 'date'=>$datefoo);
+                                                $archivesect[] = ['wikititle'=>$sect1[$key]['wikititle'], 'title'=>$sect1[$key]['title'], 'content'=>$sect1[$key]['content'], 'date'=>$datefoo];
                                                 // Sort by date BEGIN
-                                                $archivedsect_date=array();
+                                                $archivedsect_date=[];
                                                 foreach ($archivedsect as $value2)
                                                         $archivedsect_date[]=$value2['date'];
                                                 array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
@@ -572,8 +572,8 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
 
         $contentpage = $site->initPage( $contentpagename )->get_text( $force = true );
         $difflen = strlen($contentpage);
-        $archivepage = array();
-        $archivedrequests = array('total'=>0);
+        $archivepage = [];
+        $archivedrequests = ['total'=>0];
 
         $token = numtoken(100);
         $motif = "== *([^=^ ][^=^\n]*[^=^ ]) *==( *\n|$)"; // + "^\n", + " *" (2 lines), changing place of "\n" on $actumotif - " *\n" replaced by "( *\n|$)"
