@@ -14,7 +14,7 @@ Meta Archival Script - creates all archive pages
 
 ---------------------------------------------   */
 
-function createpage ($pn, $text) {
+function createpage( $pn, $text ) {
 # fct intermédiaire pour rendre le code plus lisible
 		global $site;
 		$reason = 'init archive';
@@ -23,10 +23,10 @@ function createpage ($pn, $text) {
 		$site->initPage( $pn )->edit( $text, $reason );
 
 		echo "...\n";
-		sleep(5);
+		sleep( 5 );
 }
 
-//Dependency: https://github.com/MW-Peachy/Peachy
+// Dependency: https://github.com/MW-Peachy/Peachy
 require '/data/project/sbot/Peachy/Peachy/Init.php' ;
 
 $site = Peachy::newWiki( "meta" );
@@ -139,19 +139,17 @@ $array_feed = [
 "
 ];
 
-if (date('m')!=12) {      $sfx = date('Y') . '-' . str_pad((date('m')+1), 2, 0, STR_PAD_LEFT) ;
-} else {                            $sfx = (date('Y')+1) . '-' . '01';
+if ( date( 'm' )!=12 ) {      $sfx = date( 'Y' ) . '-' . str_pad( ( date( 'm' )+1 ), 2, 0, STR_PAD_LEFT ) ;
+} else {                            $sfx = ( date( 'Y' )+1 ) . '-' . '01';
 }
 
-foreach($array_feed as $pn => $text)
-{
+foreach ( $array_feed as $pn => $text ) {
 		global $site;
 		$pn .= $sfx ;
 		$esum = "" ;
 
 		$es = $site->initPage( $pn );
-		if( !($es->get_exists()) )
-		{
+		if ( !( $es->get_exists() ) ) {
 				$site->initPage( $pn )->edit( $text, $reason );
 		} else { echo "Skipping [[$pn]] (already created)\n";
 		}

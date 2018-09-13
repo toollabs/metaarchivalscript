@@ -9,16 +9,7 @@
 		<exclude name="MediaWiki.Commenting.FunctionComment.WrongStyle" />
 		<exclude name="MediaWiki.NamingConventions.PrefixedGlobalFunctions.wfPrefix" />
 		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.allowedPrefix" />
-		<exclude name="MediaWiki.WhiteSpace.DisallowEmptyLineFunctions.NoEmptyLine" />
-		<exclude name="MediaWiki.WhiteSpace.MultipleEmptyLines.MultipleEmptyLines" />
-		<exclude name="MediaWiki.WhiteSpace.OpeningKeywordParenthesis.WrongWhitespaceBeforeParenthesis" />
-		<exclude name="MediaWiki.WhiteSpace.SpaceAfterControlStructure.Incorrect" />
-		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeControlStructureBrace.BraceOnNewLine" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
-		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.SingleSpaceBeforeSingleLineComment" />
-		<exclude name="MediaWiki.WhiteSpace.SpaceyParenthesis.SingleSpaceAfterOpenParenthesis" />
-		<exclude name="MediaWiki.WhiteSpace.SpaceyParenthesis.SingleSpaceBeforeCloseParenthesis" />
-		<exclude name="MediaWiki.WhiteSpace.SpaceyParenthesis.SpaceBeforeOpeningParenthesis" />
 		<exclude name="Squiz.Operators.ValidLogicalOperators.NotAllowed" />
 		<exclude name="Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter" />
 		<exclude name="Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore" />
