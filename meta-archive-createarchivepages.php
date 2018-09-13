@@ -1,39 +1,33 @@
 ﻿<?php
+/**
+ * Create the archive pages
+ *
+ * @author Quentinv57 (2011 - 2014)
+ * @author Steinsplitter (2014 - 2018)
+ * @author MarcoAurelio (2018 - )
+ * @license GPL-3.0-only
+ */
 
-/*   ---------------------------------------------
 
-Author : Quentinv57 (2011 - 2014)
-         Steinsplitter (2014 - )
-
-Licence : GNU General Public License v3
-                        (see http://www.gnu.org/licenses/)
-
-Date of creation : 2011-04
-
-Meta Archival Script - creates all archive pages
-
----------------------------------------------   */
-
-function createpage ($pn, $text)
+function createpage( $pn, $text ) {
 # fct intermédiaire pour rendre le code plus lisible
-{
-        global $site;
-        $reason = 'init archive';
+		global $site;
+		$reason = 'init archive';
 
-        echo "Creating [[$pn]]";
-        $site->initPage( $pn )->edit( $text, $reason );
+		echo "Creating [[$pn]]";
+		$site->initPage( $pn )->edit( $text, $reason );
 
-        echo "...\n";
-        sleep(5);
+		echo "...\n";
+		sleep( 5 );
 }
 
-//Dependency: https://github.com/MW-Peachy/Peachy
-require( '/data/project/sbot/Peachy/Peachy/Init.php' );
+// Dependency: https://github.com/MW-Peachy/Peachy
+require '/data/project/sbot/Peachy/Peachy/Init.php';
 
 $site = Peachy::newWiki( "meta" );
 $site->set_runpage( null );
 
-$array_feed = array(
+$array_feed = [
 'Talk:Spam blacklist/Archives/' => "{{Archive header}}
 
 == Proposed additions ==
@@ -138,23 +132,20 @@ $array_feed = array(
 
 == Requests involving merges, usurps or other complications ==
 "
-);
+];
 
-if (date('m')!=12)      $sfx = date('Y') . '-' . str_pad((date('m')+1), 2, 0, STR_PAD_LEFT) ;
-else                            $sfx = (date('Y')+1) . '-' . '01';
-
-foreach($array_feed as $pn => $text)
-{
-        global $site;
-        $pn .= $sfx ;
-        $esum = "" ;
-
-        $es = $site->initPage( $pn );
-        if( !($es->get_exists()) )
-        {
-                $site->initPage( $pn )->edit( $text, $reason );
-        }
-        else echo "Skipping [[$pn]] (already created)\n";
+if ( date( 'm' ) != 12 ) {      $sfx = date( 'Y' ) . '-' . str_pad( ( date( 'm' ) + 1 ), 2, 0, STR_PAD_LEFT );
+} else {                            $sfx = ( date( 'Y' ) + 1 ) . '-' . '01';
 }
 
-?>
+foreach ( $array_feed as $pn => $text ) {
+		global $site;
+		$pn .= $sfx;
+		$esum = "";
+
+		$es = $site->initPage( $pn );
+		if ( !( $es->get_exists() ) ) {
+				$site->initPage( $pn )->edit( $text, $reason );
+		} else { echo "Skipping [[$pn]] (already created)\n";
+		}
+}
