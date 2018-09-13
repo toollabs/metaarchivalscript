@@ -120,13 +120,15 @@ function get_content_by_section ($texte, $lvlsect)
         $result = [];
 
         $motif = '';
-        for ($i=1; $i<=$lvlsect; $i++)
+        for ($i=1; $i<=$lvlsect; $i++) {
                 $motif .= "=";
+        }
         $motif = $motif . " *([^=^ ][^=^\n]*[^=^ ]) *" . $motif . "[^=]" ;
 
         // si la sous-section n'apparait pas, on renvoie le texte
-        if (!preg_match('#'.$motif.'#', $texte))
+        if (!preg_match('#'.$motif.'#', $texte)) {
                 return ['error'=>'NOTFOUND', 'content'=>$texte];
+        }
 
         // liste des sections
         preg_match_all ("#".$motif."#U", $texte, $listesections);
@@ -222,8 +224,9 @@ function get_last_date ($text)
                 if ($lastdate==[]) {
                         $lastdate = ['d'=>$d, 'm'=>$m, 'y'=>$y];
                 } else {
-                        if ($y>$lastdate['y'] OR ($y==$lastdate['y'] AND $m>$lastdate['m']) OR ($y==$lastdate['y'] AND $m==$lastdate['m'] AND $d>$lastdate['d']))
+                        if ($y>$lastdate['y'] OR ($y==$lastdate['y'] AND $m>$lastdate['m']) OR ($y==$lastdate['y'] AND $m==$lastdate['m'] AND $d>$lastdate['d'])) {
                                 $lastdate = ['d'=>$d, 'm'=>$m, 'y'=>$y];
+                        }
                 }
         }
 
@@ -248,14 +251,16 @@ function is_last_x_days ($date, $nbdays)
         $time = mktime (0,0,1, $date['m'], $date['d'], $date['y']);
         $time += $nbdays * 3600 * 24;
 
-        if ($time<=time())      return TRUE;
-        else                            return FALSE;
+        if ($time<=time()) {      return TRUE;
+        } else {                            return FALSE;
+        }
 }
 
 function lastmonth ()
 {
-        if (date('m')!=1)       return date('Y') . '-' . str_pad((date('m')-1), 2, 0, STR_PAD_LEFT) ;
-        else                            return (date('Y')-1) . '-' . '12';
+        if (date('m')!=1) {       return date('Y') . '-' . str_pad((date('m')-1), 2, 0, STR_PAD_LEFT) ;
+        } else {                            return (date('Y')-1) . '-' . '12';
+        }
 }
 
 function numtoken ($length)
@@ -273,8 +278,9 @@ function zerofill ($num, $length)
 {
         $result = $num;
 
-        for ($i=0; $i<($length-strlen($num)); $i++)
+        for ($i=0; $i<($length-strlen($num)); $i++) {
                 $result = '0'.$result;
+        }
 
         return $result;
 }
@@ -305,8 +311,9 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
 
         // Pour monter jusqu'au niveau de section $lvlsect, s'il est strict. supérieur à deux, on prend seulement le contenu de la première section de titre niveau 2, etc.
         for ($i=2; $i<=$lvlsect; $i++) {
-                if ($i==2) $sub = get_content_by_section ($contentpage, 2);
-                else $sub = get_content_by_section ($sub[1]['content'], $i);
+                if ($i==2) { $sub = get_content_by_section ($contentpage, 2);
+                } else { $sub = get_content_by_section ($sub[1]['content'], $i);
+                }
         }
         unset($sub[0]);
 
@@ -314,7 +321,8 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
         {
                 $id = NULL;
                 foreach ($sub as $key2=>$temp) {
-                        if ($sub[$key2]['title']==$title) $id = $key2;
+                        if ($sub[$key2]['title']==$title) { $id = $key2;
+                        }
                 }
 
                 if ($id != NULL)
@@ -328,16 +336,18 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                         foreach ($archivepage as $key => $value)
                         {
                                 ## INIT ARCHIVE PAGE WITH TOKEN - Begin
-                                if (preg_match("#".$actumotif.".*(".$motif.")#sU", $archivepage[$key], $matches))
+                                if (preg_match("#".$actumotif.".*(".$motif.")#sU", $archivepage[$key], $matches)) {
                                         $archivepage[$key] = str_replace ($matches[2], $token.$matches[2], $archivepage[$key]);
-                                else // le problème d'archivage *venait* d'ici
+                                } else // le problème d'archivage *venait* d'ici
                                 {
-                                        if (!preg_match("#".$actumotif."#",$archivepage[$key])) exit('Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (1) - unable to find "'.$actumotif.'" in "'.$key.'"');
-                                        else $archivepage[$key] .= $token;
+                                        if (!preg_match("#".$actumotif."#",$archivepage[$key])) { exit('Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (1) - unable to find "'.$actumotif.'" in "'.$key.'"');
+                                        } else { $archivepage[$key] .= $token;
+                                        }
                                 }
 
-                                if (!preg_match("#\n".$token."#",$archivepage[$key]))
+                                if (!preg_match("#\n".$token."#",$archivepage[$key])) {
                                         $archivepage[$key] = str_replace($token, "\n".$token, $archivepage[$key]);
+                                }
                                 ## INIT ARCHIVE PAGE WITH TOKEN - End
                         }
 
@@ -360,9 +370,9 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                                                         $archivedrequests[$lastdate_formated] = 0;
 
                                                         ## INIT ARCHIVE PAGE WITH TOKEN - Begin
-                                                        if (preg_match("#".$actumotif.".*(".$motif.")#sU", $archivepage[$lastdate_formated], $matches))
+                                                        if (preg_match("#".$actumotif.".*(".$motif.")#sU", $archivepage[$lastdate_formated], $matches)) {
                                                                 $archivepage[$lastdate_formated] = str_replace ($matches[2], $token.$matches[2], $archivepage[$lastdate_formated]);
-                                                        else // le problème d'archivage *venait* d'ici
+                                                        } else // le problème d'archivage *venait* d'ici
                                                         {
                                                                 if (!preg_match("#".$actumotif."#",$archivepage[$lastdate_formated])) {
                                                                         // var_dump($archivepage[$lastdate_formated]);
@@ -373,10 +383,12 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                                                                 }
                                                         }
 
-                                                        if (!preg_match("#\n".$token."#",$archivepage[$lastdate_formated]))
+                                                        if (!preg_match("#\n".$token."#",$archivepage[$lastdate_formated])) {
                                                                 $archivepage[$lastdate_formated] = str_replace($token, "\n".$token, $archivepage[$lastdate_formated]);
-                                                        if (!preg_match("#".$token."\n#",$archivepage[$lastdate_formated]))
+                                                        }
+                                                        if (!preg_match("#".$token."\n#",$archivepage[$lastdate_formated])) {
                                                                 $archivepage[$lastdate_formated] = str_replace($token, $token."\n", $archivepage[$lastdate_formated]);
+                                                        }
                                                         ## INIT ARCHIVE PAGE WITH TOKEN - End
                                                 }
 
@@ -391,15 +403,18 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                                 }
                         }
 
-                        foreach ($archivepage as $key => $value)
+                        foreach ($archivepage as $key => $value) {
                                 $archivepage[$key] = str_replace($token, '', $archivepage[$key]);
+                        }
                 }
-                else echo "Warning : section $title not found.\n";
+                else { echo "Warning : section $title not found.\n";
+                }
         }
 
         // Retrait des doubles espaces dans la page d'archive
-        foreach ($archivepage as $key => $value)
+        foreach ($archivepage as $key => $value) {
                 $archivepage[$key] = preg_replace("#\n\n\n#", "\n\n", $archivepage[$key]);
+        }
 
         // Substitution de la page
         $difflen -= strlen($contentpage); // diff de longueur (en bytes) de la page
@@ -417,7 +432,8 @@ function archiveprocess ($contentpagename, $archivepagename, $subsections, $nbda
                 echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
                 sleep(20);
         }
-        else echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+        else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+        }
 }
 
 
@@ -438,8 +454,9 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 
         // Pour monter jusqu'au niveau de section $lvlsect, s'il est strict. supérieur à deux, on prend seulement le contenu de la première section de titre niveau 2, etc.
         for ($i=2; $i<=$lvlsect; $i++) {
-                if ($i==2) $sub = get_content_by_section ($contentpage, 2);
-                else $sub = get_content_by_section ($sub[1]['content'], $i);
+                if ($i==2) { $sub = get_content_by_section ($contentpage, 2);
+                } else { $sub = get_content_by_section ($sub[1]['content'], $i);
+                }
         }
         unset($sub[0]);
 
@@ -447,7 +464,8 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
         {
                 $id = NULL;
                 foreach ($sub as $key2=>$temp) {
-                        if ($sub[$key2]['title']==$title) $id = $key2;
+                        if ($sub[$key2]['title']==$title) { $id = $key2;
+                        }
                 }
 
                 if ($id != NULL)
@@ -470,8 +488,9 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                         }
                         // Sort by date BEGIN
                         $archivedsect_date=[];
-                        foreach ($archivedsect as $value2)
+                        foreach ($archivedsect as $value2) {
                                 $archivedsect_date[]=$value2['date'];
+                        }
                         array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
                         // Sort by date END
 
@@ -496,10 +515,10 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
 
                                                 foreach ($archivesect as $key2 => $value2)
                                                 {
-                                                        if ($archivesect[$key2]['date'] == $datefoo)
+                                                        if ($archivesect[$key2]['date'] == $datefoo) {
                                                                 $enddate=0;
 
-                                                        elseif ($archivesect[$key2]['date'] > $datefoo) {
+                                                        } elseif ($archivesect[$key2]['date'] > $datefoo) {
                                                                 if ($enddate) { // si la section n'existe pas encore
                                                                         $archivepage = str_replace ($archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $title."\n".$token."\n".$archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $archivepage);
                                                                 } else { // si la section existe déjà, on ne la crée pas
@@ -527,8 +546,9 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                                                 $archivesect[] = ['wikititle'=>$sect1[$key]['wikititle'], 'title'=>$sect1[$key]['title'], 'content'=>$sect1[$key]['content'], 'date'=>$datefoo];
                                                 // Sort by date BEGIN
                                                 $archivedsect_date=[];
-                                                foreach ($archivedsect as $value2)
+                                                foreach ($archivedsect as $value2) {
                                                         $archivedsect_date[]=$value2['date'];
+                                                }
                                                 array_multisort($archivedsect_date,SORT_NUMERIC,$archivedsect);
                                                 // Sort by date END
                                         }
@@ -536,7 +556,8 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                         }
 
                 }
-                else echo "Warning : section $title not found.\n";
+                else { echo "Warning : section $title not found.\n";
+                }
         }
 
         // Retrait des doubles espaces dans la page d'archive
@@ -556,7 +577,8 @@ function archiveprocess_tempsysop ($contentpagename, $archivepagename, $subsecti
                 echo $archivedrequests . " request(s) archived with success !\n\n";
                 sleep(20);
         }
-        else echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+        else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+        }
 }
 
 
@@ -605,9 +627,9 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
                                                 $archivedrequests[$lastdate_formated] = 0;
 
                                                 ## INIT ARCHIVE PAGE WITH TOKEN - Begin
-                                                if (preg_match("#".$actumotif.".*(".$motif.")#sU", $archivepage[$lastdate_formated], $matches))
+                                                if (preg_match("#".$actumotif.".*(".$motif.")#sU", $archivepage[$lastdate_formated], $matches)) {
                                                         $archivepage[$lastdate_formated] = str_replace ($matches[2], $token.$matches[2], $archivepage[$lastdate_formated]);
-                                                else // le problème d'archivage *venait* d'ici
+                                                } else // le problème d'archivage *venait* d'ici
                                                 {
                                                         if (!preg_match("#".$actumotif."#",$archivepage[$lastdate_formated])) {
                                                                 // var_dump($archivepage[$lastdate_formated]);
@@ -618,10 +640,12 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
                                                         }
                                                 }
 
-                                                if (!preg_match("#\n".$token."#",$archivepage[$lastdate_formated]))
+                                                if (!preg_match("#\n".$token."#",$archivepage[$lastdate_formated])) {
                                                         $archivepage[$lastdate_formated] = str_replace($token, "\n".$token, $archivepage[$lastdate_formated]);
-                                                if (!preg_match("#".$token."\n#",$archivepage[$lastdate_formated]))
+                                                }
+                                                if (!preg_match("#".$token."\n#",$archivepage[$lastdate_formated])) {
                                                         $archivepage[$lastdate_formated] = str_replace($token, $token."\n", $archivepage[$lastdate_formated]);
+                                                }
                                                 ## INIT ARCHIVE PAGE WITH TOKEN - End
                                         }
 
@@ -630,8 +654,9 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
                                         $nbarchivedinsect1++;
                                         $contentpage = str_replace($sect1[$key]['wikititle'].$sect1[$key]['content'], '', $contentpage);
                                                 // important : retirer le titre niveau 2 (date d'expiration) si c'est la seule / la dernière requête archivée pour ce jour
-                                                if ((count($sect1)-1)==$nbarchivedinsect1)
+                                                if ((count($sect1)-1)==$nbarchivedinsect1) {
                                                         $contentpage = str_replace($expiredates[$ndate]['wikititle'], '', $contentpage);
+                                                }
 
                                         $archivepage[$lastdate_formated] = str_replace($token, $sect1[$key]['wikititle'].$sect1[$key]['content']."\n".$token, $archivepage[$lastdate_formated]);
                                         $archivedrequests['total']++;
@@ -667,7 +692,8 @@ function archiveprocess_approvedtemp ($contentpagename, $archivepagename, $archi
                 echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
                 sleep(20);
         }
-        else echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+        else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+        }
 }
 
 
@@ -687,17 +713,19 @@ foreach ($settings_archives as $arcpagetitle => $arcpageset)
                 $arcpageset['match'] = (empty($arcpageset['match'])) ? 2 : $arcpageset['match'];
                 $arcpageset['lvlsect'] = (empty($arcpageset['lvlsect'])) ? 2 : $arcpageset['lvlsect'];
 
-                if ($arcpageset['nbdays']>0)
+                if ($arcpageset['nbdays']>0) {
                         if ($arcpagetitle==$settings_archives_tempsysop['page'])
                         {
                                 // archives temp sysop requests first
                                 archiveprocess_tempsysop ($settings_archives_tempsysop['page'], $settings_archives_tempsysop['page'].'/'.$settings_archives_tempsysop['suffix'], $settings_archives_tempsysop['subsections'], $arcpageset['nbdays'], $settings_archives_tempsysop['match'], $arcpageset['lvlsect']);
                                 archiveprocess_approvedtemp ($settings_archives_approvedtemp['page'], $settings_archives_approvedtemp['arc_subpage'], $settings_archives_approvedtemp['arc_subsection'], $settings_archives_approvedtemp['nbdays'], $settings_archives_approvedtemp['match'], $arcpageset['lvlsect']);
                         }
+                }
 
                         archiveprocess ($arcpagetitle, $arcpageset['subpage'], $arcpageset['subsections'], $arcpageset['nbdays'], $arcpageset['match'], $arcpageset['lvlsect']);
         }
-        else exit('Error : please check settings definition.');
+        else { exit('Error : please check settings definition.');
+        }
 }
 
 ?>
