@@ -695,5 +695,3 @@ foreach ( $settings_archives as $arcpagetitle => $arcpageset ) {
 		} else { exit( 'Error : please check settings definition.' );
 		}
 }
-
-?>

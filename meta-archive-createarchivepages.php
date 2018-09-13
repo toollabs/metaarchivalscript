@@ -154,5 +154,3 @@ foreach ( $array_feed as $pn => $text ) {
 		} else { echo "Skipping [[$pn]] (already created)\n";
 		}
 }
-
-?>
