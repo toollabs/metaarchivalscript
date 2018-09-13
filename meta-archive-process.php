@@ -122,16 +122,16 @@ function get_content_by_section( $texte, $lvlsect ) {
 		$motif = $motif . " *([^=^ ][^=^\n]*[^=^ ]) *" . $motif . "[^=]";
 
 		// si la sous-section n'apparait pas, on renvoie le texte
-		if ( !preg_match( '#'.$motif.'#', $texte ) ) {
+		if ( !preg_match( '#' . $motif . '#', $texte ) ) {
 				return [ 'error' => 'NOTFOUND', 'content' => $texte ];
 		}
 
 		// liste des sections
-		preg_match_all( "#".$motif."#U", $texte, $listesections );
+		preg_match_all( "#" . $motif . "#U", $texte, $listesections );
 		$listesections = $listesections[1];
 
 		// sinon : intro
-		preg_match( "#^(.*)".preg_quote_magic( $listesections[0] )."#sU", $texte, $matches );
+		preg_match( "#^(.*)" . preg_quote_magic( $listesections[0] ) . "#sU", $texte, $matches );
 		$result[0]['wikititle'] = '';
 		$result[0]['title'] = '';
 		$result[0]['content'] = $matches[1];
@@ -143,7 +143,7 @@ function get_content_by_section( $texte, $lvlsect ) {
 						$motif_1 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[( $i - 1 )] ), $motif );
 						$motif_2 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[$i] ), $motif );
 
-						preg_match( "#(".$motif_1.")(.*)".$motif_2."#sU", $texte, $matches );
+						preg_match( "#(" . $motif_1 . ")(.*)" . $motif_2 . "#sU", $texte, $matches );
 
 						$result[$i]['wikititle'] = $matches[1];
 						$result[$i]['title'] = $matches[2];
@@ -154,7 +154,7 @@ function get_content_by_section( $texte, $lvlsect ) {
 				// section n
  else {
 						$motif_2 = str_replace( "[^=^ ][^=^\n]*[^=^ ]", preg_quote_magic( $listesections[( $i - 1 )] ), $motif );
-						preg_match( "#(".$motif_2.")(.*)$#sU", $texte, $matches );
+						preg_match( "#(" . $motif_2 . ")(.*)$#sU", $texte, $matches );
 						$result[$i]['wikititle'] = $matches[1];
 						$result[$i]['title'] = $matches[2];
 						$result[$i]['content'] = $matches[3];
@@ -291,7 +291,7 @@ function zerofill( $num, $length ) {
 		$result = $num;
 
 		for ( $i = 0; $i < ( $length - strlen( $num ) ); $i++ ) {
-				$result = '0'.$result;
+				$result = '0' . $result;
 		}
 
 		return $result;
@@ -310,7 +310,7 @@ function zerofill( $num, $length ) {
 		$lvlsect (facultatif) est le niveau des sections données dans $subsections
 */
 
-function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=null, $lvlsect=2 ) {
+function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx = null, $lvlsect = 2 ) {
 		global $site;
 		echo "Working on [[$contentpagename]]...\n";
 
@@ -335,25 +335,25 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 				}
 
 				if ( $id != null ) {
-						echo "-> ".$sub[$id]['title']."\n";
+						echo "-> " . $sub[$id]['title'] . "\n";
 
 						$token = numtoken( 100 );
 						$motif = "== *([^=^ ][^=^\n]*[^=^ ]) *==( *\n|$)"; // + "^\n", + " *" (2 lines), changing place of "\n" on $actumotif - " *\n" replaced by "( *\n|$)"
-						$actumotif = "\n== *(" .preg_quote_magic( $sub[$id]['title'] ). ") *== *";
+						$actumotif = "\n== *(" . preg_quote_magic( $sub[$id]['title'] ) . ") *== *";
 
 						foreach ( $archivepage as $key => $value ) {
 								## INIT ARCHIVE PAGE WITH TOKEN - Begin
-								if ( preg_match( "#".$actumotif.".*(".$motif.")#sU", $archivepage[$key], $matches ) ) {
-										$archivepage[$key] = str_replace( $matches[2], $token.$matches[2], $archivepage[$key] );
+								if ( preg_match( "#" . $actumotif . ".*(" . $motif . ")#sU", $archivepage[$key], $matches ) ) {
+										$archivepage[$key] = str_replace( $matches[2], $token . $matches[2], $archivepage[$key] );
 								} else // le problème d'archivage *venait* d'ici
 								{
-										if ( !preg_match( "#".$actumotif."#", $archivepage[$key] ) ) { exit( 'Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (1) - unable to find "'.$actumotif.'" in "'.$key.'"' );
+										if ( !preg_match( "#" . $actumotif . "#", $archivepage[$key] ) ) { exit( 'Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (1) - unable to find "' . $actumotif . '" in "' . $key . '"' );
 										} else { $archivepage[$key] .= $token;
 										}
 								}
 
-								if ( !preg_match( "#\n".$token."#", $archivepage[$key] ) ) {
-										$archivepage[$key] = str_replace( $token, "\n".$token, $archivepage[$key] );
+								if ( !preg_match( "#\n" . $token . "#", $archivepage[$key] ) ) {
+										$archivepage[$key] = str_replace( $token, "\n" . $token, $archivepage[$key] );
 								}
 								## INIT ARCHIVE PAGE WITH TOKEN - End
 						}
@@ -362,46 +362,46 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 						unset( $sect1[0] );
 
 						foreach ( $sect1 as $key => $value ) {
-								if ( ( empty( $matchregx ) or preg_match( $matchregx, $sect1[$key]['content'] ) ) and !preg_match( '#'.preg_quote_magic( DONTARCHIVESECT ).'#i', $sect1[$key]['content'] ) ) { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
+								if ( ( empty( $matchregx ) or preg_match( $matchregx, $sect1[$key]['content'] ) ) and !preg_match( '#' . preg_quote_magic( DONTARCHIVESECT ) . '#i', $sect1[$key]['content'] ) ) { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
 										$lastdate = get_last_date( $sect1[$key]['content'] );
 
 										if ( !empty( $lastdate ) and is_last_x_days( $lastdate, $nbdaysexec ) ) {
-												$lastdate_formated = $lastdate['y'].'-'.str_pad( $lastdate['m'], 2, 0, STR_PAD_LEFT );
+												$lastdate_formated = $lastdate['y'] . '-' . str_pad( $lastdate['m'], 2, 0, STR_PAD_LEFT );
 
 												if ( empty( $archivepage[$lastdate_formated] ) ) { // si on a pas encore eu besoin de cette page d'archive, on l'initialise
-														$archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text( $force = true );
+														$archivepage[$lastdate_formated] = $site->initPage( $archivepagename . $lastdate_formated )->get_text( $force = true );
 														$archivedrequests[$lastdate_formated] = 0;
 
 														## INIT ARCHIVE PAGE WITH TOKEN - Begin
-														if ( preg_match( "#".$actumotif.".*(".$motif.")#sU", $archivepage[$lastdate_formated], $matches ) ) {
-																$archivepage[$lastdate_formated] = str_replace( $matches[2], $token.$matches[2], $archivepage[$lastdate_formated] );
+														if ( preg_match( "#" . $actumotif . ".*(" . $motif . ")#sU", $archivepage[$lastdate_formated], $matches ) ) {
+																$archivepage[$lastdate_formated] = str_replace( $matches[2], $token . $matches[2], $archivepage[$lastdate_formated] );
 														} else // le problème d'archivage *venait* d'ici
 														{
-																if ( !preg_match( "#".$actumotif."#", $archivepage[$lastdate_formated] ) ) {
+																if ( !preg_match( "#" . $actumotif . "#", $archivepage[$lastdate_formated] ) ) {
 																		// var_dump($archivepage[$lastdate_formated]);
-																		exit( 'Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (2) - unable to find '.$actumotif.' in '.$lastdate_formated );
+																		exit( 'Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (2) - unable to find ' . $actumotif . ' in ' . $lastdate_formated );
 																} else {
 																		$archivepage[$lastdate_formated] .= $token;
 																		// echo "Attention ! (<2>)\n";
 																}
 														}
 
-														if ( !preg_match( "#\n".$token."#", $archivepage[$lastdate_formated] ) ) {
-																$archivepage[$lastdate_formated] = str_replace( $token, "\n".$token, $archivepage[$lastdate_formated] );
+														if ( !preg_match( "#\n" . $token . "#", $archivepage[$lastdate_formated] ) ) {
+																$archivepage[$lastdate_formated] = str_replace( $token, "\n" . $token, $archivepage[$lastdate_formated] );
 														}
-														if ( !preg_match( "#".$token."\n#", $archivepage[$lastdate_formated] ) ) {
-																$archivepage[$lastdate_formated] = str_replace( $token, $token."\n", $archivepage[$lastdate_formated] );
+														if ( !preg_match( "#" . $token . "\n#", $archivepage[$lastdate_formated] ) ) {
+																$archivepage[$lastdate_formated] = str_replace( $token, $token . "\n", $archivepage[$lastdate_formated] );
 														}
 														## INIT ARCHIVE PAGE WITH TOKEN - End
 												}
 
 												// on archive la requête $key
-												$contentpage = str_replace( $sect1[$key]['wikititle'].$sect1[$key]['content'], '', $contentpage );
-												$archivepage[$lastdate_formated] = str_replace( $token, $sect1[$key]['wikititle'].$sect1[$key]['content']."\n".$token, $archivepage[$lastdate_formated] );
+												$contentpage = str_replace( $sect1[$key]['wikititle'] . $sect1[$key]['content'], '', $contentpage );
+												$archivepage[$lastdate_formated] = str_replace( $token, $sect1[$key]['wikititle'] . $sect1[$key]['content'] . "\n" . $token, $archivepage[$lastdate_formated] );
 												$archivedrequests['total']++;
 												$archivedrequests[$lastdate_formated]++;
 												# Test (Attention certaines requetes sont supprimées mais non archivées !)
-												echo $lastdate_formated."<->".$sect1[$key]['title']."\n";
+												echo $lastdate_formated . "<->" . $sect1[$key]['title'] . "\n";
 										}
 								}
 						}
@@ -427,12 +427,12 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 				foreach ( $archivepage as $key => $value ) {
 						sleep( 5 );
 						$archivesummary = ( $archivedrequests[$key] > 1 ) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
-						$site->initPage( $archivepagename.$key )->edit( $value, $archivesummary );
+						$site->initPage( $archivepagename . $key )->edit( $value, $archivesummary );
 				}
 
 				echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
 				sleep( 20 );
-		} else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+		} else { echo "No edit(" . $archivedrequests['total'] . " request(s) - $difflen bytes)\n\n";
 		}
 }
 
@@ -440,7 +440,7 @@ function archiveprocess( $contentpagename, $archivepagename, $subsections, $nbda
 ************************ Extension temp_sysop  ****************************
 ************************************************************************ */
 
-function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx=null, $lvlsect=2 ) {
+function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsections, $nbdaysexec, $matchregx = null, $lvlsect = 2 ) {
 		global $site;
 		echo "Working on [[$contentpagename]] (temp sysop requests) ...\n";
 
@@ -465,10 +465,10 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 				}
 
 				if ( $id != null ) {
-						echo "-> ".$sub[$id]['title']."\n";
+						echo "-> " . $sub[$id]['title'] . "\n";
 
 						$motif = "== *([^=^ ][^=^\n]*[^=^ ]) *==( *\n|$)"; // + "^\n", + " *" (2 lines), changing place of "\n" on $actumotif - " *\n" replaced by "( *\n|$)"
-						$actumotif = "\n== *(" .preg_quote_magic( $sub[$id]['title'] ). ") *== *";
+						$actumotif = "\n== *(" . preg_quote_magic( $sub[$id]['title'] ) . ") *== *";
 
 						// No need to archive page with tooken - especially because this page does not have the same format
 
@@ -478,7 +478,7 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 						$archivesect = get_content_by_section( $archivepage, 2 );
 						foreach ( $archivesect as $key => $value ) {
 								$expiredate = get_expiring_date( $archivesect[$key]['title'] );
-								$archivesect[$key]['date'] = $expiredate['y'].zerofill( $expiredate['m'], 2 ).zerofill( $expiredate['d'], 2 );
+								$archivesect[$key]['date'] = $expiredate['y'] . zerofill( $expiredate['m'], 2 ) . zerofill( $expiredate['d'], 2 );
 						}
 						// Sort by date BEGIN
 						$archivedsect_date = [];
@@ -489,7 +489,7 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 						// Sort by date END
 
 						foreach ( $sect1 as $key => $value ) {
-								if ( ( empty( $matchregx ) or preg_match( $matchregx, $sect1[$key]['content'], $matches ) ) and !preg_match( '#'.preg_quote_magic( DONTARCHIVESECT ).'#i', $sect1[$key]['content'] ) ) { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
+								if ( ( empty( $matchregx ) or preg_match( $matchregx, $sect1[$key]['content'], $matches ) ) and !preg_match( '#' . preg_quote_magic( DONTARCHIVESECT ) . '#i', $sect1[$key]['content'] ) ) { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
 										$lastdate = get_last_date( $sect1[$key]['content'] );
 
 										if ( !empty( $lastdate ) and is_last_x_days( $lastdate, $nbdaysexec ) ) {
@@ -498,10 +498,10 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 												$template_data['year'] = $matches[2];
 												$template_data['month'] = $matches[3];
 												$template_data['day'] = $matches[4];
-												$datefoo = $template_data['year'].$template_data['month'].$template_data['day'];
+												$datefoo = $template_data['year'] . $template_data['month'] . $template_data['day'];
 
 												$token = numtoken( 100 );
-												$title = '== Expiring: '.number_format( $template_data['day'] ).' '.FooMonth( $template_data['month'] ).' '.$template_data['year'].' ==';
+												$title = '== Expiring: ' . number_format( $template_data['day'] ) . ' ' . FooMonth( $template_data['month'] ) . ' ' . $template_data['year'] . ' ==';
 												$enddate = 1; // la date située juste après notre section
 
 												foreach ( $archivesect as $key2 => $value2 ) {
@@ -510,9 +510,9 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 
 														} elseif ( $archivesect[$key2]['date'] > $datefoo ) {
 																if ( $enddate ) { // si la section n'existe pas encore
-																		$archivepage = str_replace( $archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $title."\n".$token."\n".$archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $archivepage );
+																		$archivepage = str_replace( $archivesect[$key2]['wikititle'] . $archivesect[$key2]['content'], $title . "\n" . $token . "\n" . $archivesect[$key2]['wikititle'] . $archivesect[$key2]['content'], $archivepage );
 																} else { // si la section existe déjà, on ne la crée pas
-																		$archivepage = str_replace( $archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $token."\n".$archivesect[$key2]['wikititle'].$archivesect[$key2]['content'], $archivepage );
+																		$archivepage = str_replace( $archivesect[$key2]['wikititle'] . $archivesect[$key2]['content'], $token . "\n" . $archivesect[$key2]['wikititle'] . $archivesect[$key2]['content'], $archivepage );
 																}
 
 																$enddate = 0;
@@ -520,15 +520,15 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 														}
 												}
 												if ( $enddate ) { // Cas où on met la requête à la fin de la liste
-														$archivepage .= "\n\n".$title."\n".$token;
+														$archivepage .= "\n\n" . $title . "\n" . $token;
 												}
 
 												// on archive la requête $key
-												$contentpage = str_replace( $sect1[$key]['wikititle'].$sect1[$key]['content'], '', $contentpage );
-												$archivepage = str_replace( $token, $sect1[$key]['wikititle'].$sect1[$key]['content'], $archivepage );
+												$contentpage = str_replace( $sect1[$key]['wikititle'] . $sect1[$key]['content'], '', $contentpage );
+												$archivepage = str_replace( $token, $sect1[$key]['wikititle'] . $sect1[$key]['content'], $archivepage );
 												$archivedrequests++;
 												# Test (Attention certaines requetes sont supprimées mais non archivées !)
-												echo "->".$sect1[$key]['title']."\n";
+												echo "->" . $sect1[$key]['title'] . "\n";
 
 												// Add it in the array $archivesect (avoids problems if we archive two temp requests that expire the same day)
 												$archivesect[] = [ 'wikititle' => $sect1[$key]['wikititle'], 'title' => $sect1[$key]['title'], 'content' => $sect1[$key]['content'], 'date' => $datefoo ];
@@ -562,7 +562,7 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 
 				echo $archivedrequests . " request(s) archived with success !\n\n";
 				sleep( 20 );
-		} else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+		} else { echo "No edit(" . $archivedrequests['total'] . " request(s) - $difflen bytes)\n\n";
 		}
 }
 
@@ -570,7 +570,7 @@ function archiveprocess_tempsysop( $contentpagename, $archivepagename, $subsecti
 ************************ Extension approved_temp  ****************************
 ************************************************************************ */
 
-function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archive_subsection, $nbdaysexec, $matchregx=null, $lvlsect=2 ) {
+function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archive_subsection, $nbdaysexec, $matchregx = null, $lvlsect = 2 ) {
 		global $site;
 
 		echo "Working on [[$contentpagename]]...\n";
@@ -582,7 +582,7 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 
 		$token = numtoken( 100 );
 		$motif = "== *([^=^ ][^=^\n]*[^=^ ]) *==( *\n|$)"; // + "^\n", + " *" (2 lines), changing place of "\n" on $actumotif - " *\n" replaced by "( *\n|$)"
-		$actumotif = "\n== *(" .preg_quote_magic( $archive_subsection ). ") *== *";
+		$actumotif = "\n== *(" . preg_quote_magic( $archive_subsection ) . ") *== *";
 
 		$expiredates = get_content_by_section( $contentpage, 2 );
 		unset( $expiredates[0] );
@@ -594,52 +594,52 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 				$nbarchivedinsect1 = 0; // nb de requêtes archivées dans la section sect1
 
 				foreach ( $sect1 as $key => $value ) {
-						if ( ( empty( $matchregx ) or preg_match( $matchregx, $sect1[$key]['content'] ) ) and !preg_match( '#'.preg_quote_magic( DONTARCHIVESECT ).'#i', $sect1[$key]['content'] ) ) { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
+						if ( ( empty( $matchregx ) or preg_match( $matchregx, $sect1[$key]['content'] ) ) and !preg_match( '#' . preg_quote_magic( DONTARCHIVESECT ) . '#i', $sect1[$key]['content'] ) ) { // 20111011 - Adding a condition that will prevent requests containing the DONTARCHIVESECT template to be archived
 								$lastdate = get_last_date( $sect1[$key]['content'] );
 
 								if ( !empty( $lastdate ) and is_last_x_days( $lastdate, $nbdaysexec ) ) {
-										$lastdate_formated = $lastdate['y'].'-'.str_pad( $lastdate['m'], 2, 0, STR_PAD_LEFT );
+										$lastdate_formated = $lastdate['y'] . '-' . str_pad( $lastdate['m'], 2, 0, STR_PAD_LEFT );
 
 										if ( empty( $archivepage[$lastdate_formated] ) ) { // si on a pas encore eu besoin de cette page d'archive, on l'initialise
-												$archivepage[$lastdate_formated] = $site->initPage( $archivepagename.$lastdate_formated )->get_text( $force = true );
+												$archivepage[$lastdate_formated] = $site->initPage( $archivepagename . $lastdate_formated )->get_text( $force = true );
 												$archivedrequests[$lastdate_formated] = 0;
 
 												## INIT ARCHIVE PAGE WITH TOKEN - Begin
-												if ( preg_match( "#".$actumotif.".*(".$motif.")#sU", $archivepage[$lastdate_formated], $matches ) ) {
-														$archivepage[$lastdate_formated] = str_replace( $matches[2], $token.$matches[2], $archivepage[$lastdate_formated] );
+												if ( preg_match( "#" . $actumotif . ".*(" . $motif . ")#sU", $archivepage[$lastdate_formated], $matches ) ) {
+														$archivepage[$lastdate_formated] = str_replace( $matches[2], $token . $matches[2], $archivepage[$lastdate_formated] );
 												} else // le problème d'archivage *venait* d'ici
 												{
-														if ( !preg_match( "#".$actumotif."#", $archivepage[$lastdate_formated] ) ) {
+														if ( !preg_match( "#" . $actumotif . "#", $archivepage[$lastdate_formated] ) ) {
 																// var_dump($archivepage[$lastdate_formated]);
-																exit( 'Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (2) - unable to find '.$actumotif.' in '.$lastdate_formated );
+																exit( 'Script Aborted : Error in ARCHIVE PAGE WITH TOKEN (2) - unable to find ' . $actumotif . ' in ' . $lastdate_formated );
 														} else {
 																$archivepage[$lastdate_formated] .= $token;
 																// echo "Attention ! (<2>)\n";
 														}
 												}
 
-												if ( !preg_match( "#\n".$token."#", $archivepage[$lastdate_formated] ) ) {
-														$archivepage[$lastdate_formated] = str_replace( $token, "\n".$token, $archivepage[$lastdate_formated] );
+												if ( !preg_match( "#\n" . $token . "#", $archivepage[$lastdate_formated] ) ) {
+														$archivepage[$lastdate_formated] = str_replace( $token, "\n" . $token, $archivepage[$lastdate_formated] );
 												}
-												if ( !preg_match( "#".$token."\n#", $archivepage[$lastdate_formated] ) ) {
-														$archivepage[$lastdate_formated] = str_replace( $token, $token."\n", $archivepage[$lastdate_formated] );
+												if ( !preg_match( "#" . $token . "\n#", $archivepage[$lastdate_formated] ) ) {
+														$archivepage[$lastdate_formated] = str_replace( $token, $token . "\n", $archivepage[$lastdate_formated] );
 												}
 												## INIT ARCHIVE PAGE WITH TOKEN - End
 										}
 
 										// on archive la requête $key
 										$nbarchivedinsect1++;
-										$contentpage = str_replace( $sect1[$key]['wikititle'].$sect1[$key]['content'], '', $contentpage );
+										$contentpage = str_replace( $sect1[$key]['wikititle'] . $sect1[$key]['content'], '', $contentpage );
 												// important : retirer le titre niveau 2 (date d'expiration) si c'est la seule / la dernière requête archivée pour ce jour
 												if ( ( count( $sect1 ) - 1 ) == $nbarchivedinsect1 ) {
 														$contentpage = str_replace( $expiredates[$ndate]['wikititle'], '', $contentpage );
 												}
 
-										$archivepage[$lastdate_formated] = str_replace( $token, $sect1[$key]['wikititle'].$sect1[$key]['content']."\n".$token, $archivepage[$lastdate_formated] );
+										$archivepage[$lastdate_formated] = str_replace( $token, $sect1[$key]['wikititle'] . $sect1[$key]['content'] . "\n" . $token, $archivepage[$lastdate_formated] );
 										$archivedrequests['total']++;
 										$archivedrequests[$lastdate_formated]++;
 										# Test (Attention certaines requetes sont supprimées mais non archivées !)
-										echo $lastdate_formated."<->".$sect1[$key]['title']."\n";
+										echo $lastdate_formated . "<->" . $sect1[$key]['title'] . "\n";
 								}
 						}
 				}
@@ -647,7 +647,7 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 
 		// Retrait des doubles espaces dans la page d'archive
 		foreach ( $archivepage as $key => $value ) {
-				$archivepage[$key] = preg_replace( "#(== *" .preg_quote_magic( $archive_subsection ). " *== *)\n\n#", "$1\n", $archivepage[$key] ); // + (pour faire joli, retrait des espaces indésirables)
+				$archivepage[$key] = preg_replace( "#(== *" . preg_quote_magic( $archive_subsection ) . " *== *)\n\n#", "$1\n", $archivepage[$key] ); // + (pour faire joli, retrait des espaces indésirables)
 				$archivepage[$key] = str_replace( $token, "\n", $archivepage[$key] ); // + (idem)
 				$archivepage[$key] = preg_replace( "#\n\n\n#", "\n\n", $archivepage[$key] );
 		}
@@ -661,12 +661,12 @@ function archiveprocess_approvedtemp( $contentpagename, $archivepagename, $archi
 				foreach ( $archivepage as $key => $value ) {
 						sleep( 5 );
 						$archivesummary = ( $archivedrequests[$key] > 1 ) ? $archivedrequests[$key] . " requests archived" : "1 request archived";
-						$site->initPage( $archivepagename.$key )->edit( $value, $archivesummary );
+						$site->initPage( $archivepagename . $key )->edit( $value, $archivesummary );
 				}
 
 				echo $archivedrequests['total'] . " request(s) archived with success !\n\n";
 				sleep( 20 );
-		} else { echo "No edit(".$archivedrequests['total']." request(s) - $difflen bytes)\n\n";
+		} else { echo "No edit(" . $archivedrequests['total'] . " request(s) - $difflen bytes)\n\n";
 		}
 }
 
@@ -686,7 +686,7 @@ foreach ( $settings_archives as $arcpagetitle => $arcpageset ) {
 				if ( $arcpageset['nbdays'] > 0 ) {
 						if ( $arcpagetitle == $settings_archives_tempsysop['page'] ) {
 								// archives temp sysop requests first
-								archiveprocess_tempsysop( $settings_archives_tempsysop['page'], $settings_archives_tempsysop['page'].'/'.$settings_archives_tempsysop['suffix'], $settings_archives_tempsysop['subsections'], $arcpageset['nbdays'], $settings_archives_tempsysop['match'], $arcpageset['lvlsect'] );
+								archiveprocess_tempsysop( $settings_archives_tempsysop['page'], $settings_archives_tempsysop['page'] . '/' . $settings_archives_tempsysop['suffix'], $settings_archives_tempsysop['subsections'], $arcpageset['nbdays'], $settings_archives_tempsysop['match'], $arcpageset['lvlsect'] );
 								archiveprocess_approvedtemp( $settings_archives_approvedtemp['page'], $settings_archives_approvedtemp['arc_subpage'], $settings_archives_approvedtemp['arc_subsection'], $settings_archives_approvedtemp['nbdays'], $settings_archives_approvedtemp['match'], $arcpageset['lvlsect'] );
 						}
 				}
