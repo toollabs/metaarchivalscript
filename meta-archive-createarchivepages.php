@@ -1,18 +1,13 @@
 ﻿<?php
+/**
+ * Create the archive pages
+ *
+ * @author Quentinv57 (2011 - 2014)
+ * @author Steinsplitter (2014 - 2018)
+ * @author MarcoAurelio (2018 - )
+ * @license GPL-3.0-only
+ */
 
-/*   ---------------------------------------------
-
-Author : Quentinv57 (2011 - 2014)
-		 Steinsplitter (2014 - )
-
-Licence : GNU General Public License v3
-						(see http://www.gnu.org/licenses/)
-
-Date of creation : 2011-04
-
-Meta Archival Script - creates all archive pages
-
----------------------------------------------   */
 
 function createpage( $pn, $text ) {
 # fct intermédiaire pour rendre le code plus lisible

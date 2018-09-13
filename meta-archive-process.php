@@ -1,37 +1,28 @@
 ﻿<?php
-
-/*   ---------------------------------------------
-
-Author : Quentinv57 (2011 - 2014)
-		 Steinsplitter (2014 - )
-
-Licence : GNU General Public License v3
-						(see http://www.gnu.org/licenses/)
-
-Date of creation : 2011-03
-
-Meta Archival Script
-		-> archive steward requests on the following pages :
-				* [[Talk:Spam blacklist]]
-				* [[Steward requests/Checkuser]]
-				* [[Steward requests/Global]]
-				* [[Steward requests/Global permissions]]
-				* [[Steward requests/Bot status]]
-				* [[Steward requests/Permissions]]
-						> temp sysop requests are transfered to [[Steward requests/Permissions/Approved temporary]] now
-						> the requests on [[Steward requests/Permissions/Approved temporary]], once the right is removed, are archived as well
-				* [[Steward requests/SUL requests]] (removed, outdated)
-				* [[Meta:Changing username]] (removed, outdated)
-				* [[Steward requests/Username changes]]
-				* [[Steward requests/Miscellaneous]]
-
----------------------------------------------
+/**
+ * Meta Archival Script
+ *
+ * archive steward requests on the following pages :
+ * - [[Talk:Spam blacklist]]
+ * - [[Steward requests/Checkuser]]
+ * - [[Steward requests/Global]]
+ * - [[Steward requests/Global permissions]]
+ * - [[Steward requests/Bot status]]
+ * - [[Steward requests/Permissions]]
+ *    > temp sysop requests are transfered to [[Steward requests/Permissions/Approved temporary]] now
+ *    > the requests on [[Steward requests/Permissions/Approved temporary]], once the right is removed, are archived as well
+ * - [[Steward requests/SUL requests]] (removed, outdated)
+ * - [[Meta:Changing username]] (removed, outdated)
+ * - [[Steward requests/Username changes]]
+ * - [[Steward requests/Miscellaneous]]
+ *
+ * @author Quentinv57 (2011 - 2014)
+ * @author Steinsplitter (2014 - 2018)
+ * @author MarcoAurelio (2018 - )
+ * @license GPL-3.0-only
+ */
 
 
-Here are the settings
-(you can set a value of $nbdays to 0 to skip the page)
-
-*/
 
 $settings_match = [ 'status_template'       => '#\{\{status\|((not |not)?done|cannot|withdrawn|local)+(|\|.*)\}\}#i',
 														'status_param'          => '#(\| *status *= *(<!--.*-->)?((not |not)?done|cannot|withdrawn|local)|\{\{status\|((not |not)?done|cannot|withdrawn|local)\}\})#iU',
